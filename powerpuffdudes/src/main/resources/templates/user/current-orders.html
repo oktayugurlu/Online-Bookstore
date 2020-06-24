@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>BoomBook | Orders</title>
+
+  <meta charset="utf-8">
+  <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="">
+
+  <!-- Google Fonts -->
+  <link href='http://fonts.googleapis.com/css?family=Maven+Pro:400,700%7CRaleway:300,400,700%7CPlayfair+Display:700' rel='stylesheet'>
+
+  <!-- Css -->
+  <link th:href="@{/user/css/sidenavbar.css}" rel="stylesheet">
+  <link th:href="@{/user/css/bootstrap.min.css}" rel="stylesheet">
+  <link th:href="@{/user/css/font-icons.css}" rel="stylesheet">
+  <link th:href="@{/user/css/style.css}" rel="stylesheet">
+
+
+  <!-- Favicons -->
+
+
+</head>
+
+<body>
+
+<div th:insert="user/user-panel-navbar :: user-panel-navbar"></div>
+
+<div class="content">
+
+  <div class="page-content" >
+
+    <main class="content-wrapper oh">
+
+
+      <section class="page-title text-center">
+        <div class="container relative clearfix">
+          <div class="title-holder">
+            <div class="title-text">
+              <h1 class="uppercase">My Orders</h1>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+
+      <section class="section-wrap shopping-cart pt-0" >
+        <div class="container relative">
+          <div class="row">
+
+            <div class="col-md-12">
+              <div class="table-wrap mb-30">
+
+                <!-- Toggles -->
+                <div class="col-sm-12">
+                  <div class="toggle">
+                    <div th:each="i,iterStat:${currentDeliveries}">
+
+                      <div class="acc-panel">
+                        <a th:text="'Order Number '+${i.getId()}"></a>
+                      </div>
+
+                      <div class="panel-content">
+                        <p><strong>Order Time:</strong><span th:text="${i.inCargo.exportDate}"></span></p>
+
+                        <p><strong style="color:#F26722;">Order Total Cost:</strong><span th:text="'$'+${currentDeliveryPrize.get(iterStat.index)}"></span></p>
+
+                        <p><strong>Order Status:</strong> <i class="fa fa-truck fa-lg" aria-hidden="true"></i> <strong>Order has been shipped</strong>
+                        </p>
+
+                        <table class="shop_table cart table">
+
+                          <thead>
+                          <tr>
+                            <th class="product-name" colspan="2">Product</th>
+                            <th class="product-price">Price</th>
+                            <th class="product-name" colspan="2">Count</th>
+
+                          </tr>
+
+                          </thead>
+
+
+                          <tbody>
+
+                          <tr th:each="j:${i.carts}" class="cart_item">
+
+                            <td class="product-thumbnail">
+                              <a th:href="${j.bookId.imageURL}">
+                                <img src="img/nutuk.jpg" alt="">
+                              </a>
+                            </td>
+
+                            <td class="product-name">
+                              <a th:text="${j.bookId.title}"></a>
+                              <ul>
+                                <li th:text="'Publisher: '+${j.bookId.publisherName}"></li>
+                                <li th:text="'Author: '+${j.bookId.authorName}"></li>
+                              </ul>
+                            </td>
+
+                            <td class="product-price">
+                              <span class="amount" th:text="'$'+ ${j.getBookId().getPriceWithCampaign()*j.getCount()} "></span>
+                            </td>
+
+                            <td class="product-price">
+                              <span class="" th:text="${j.getCount()}"></span>
+                            </td>
+
+                          </tr>
+
+                          </tbody>
+                        </table>
+
+
+                      </div>
+                    </div>
+
+
+
+
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+
+  </div>
+  </section>
+
+</div>
+
+</div>
+
+<!-- jQuery Scripts -->
+<script type="text/javascript" th:src="@{/user/js/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/user/js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/user/js/plugins.js}"></script>
+<script type="text/javascript" th:src="@{/user/js/scripts.js}"></script>
+
+</body>
+</html>

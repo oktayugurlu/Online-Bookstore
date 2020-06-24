@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Aha Shop | Single Product</title>
+
+  <meta charset="utf-8">
+  <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="">
+  
+  <!-- Google Fonts -->
+  <link href='http://fonts.googleapis.com/css?family=Maven+Pro:400,700%7CRaleway:300,400,700%7CPlayfair+Display:700' rel='stylesheet'>
+
+  <!-- Css -->
+  <link th:href="@{/user/css/bootstrap.min.css}" rel="stylesheet"/>
+  <link th:href="@{/user/css/magnific-popup.css}" rel="stylesheet"/>
+  <link th:href="@{/user/css/font-icons.css}" rel="stylesheet"/>
+  <link th:href="@{/user/css/sliders.css}" rel="stylesheet"/>
+  <link th:href="@{/user/css/style.css}" rel="stylesheet"/>
+  <link th:href="@{/user/css/animate.min.css}" rel="stylesheet"/>
+
+  <!-- Favicons -->
+  <link th:href="@{/user/img/boombook-logo.png}" rel="shortcut icon"></head>
+  <link th:href="@{/user/img/apple-touch-icon.png}" rel="apple-touch-icon"></head>
+  <link th:href="@{/user/img/apple-touch-icon-72x72.png}" sizes="72x72" rel="apple-touch-icon"></head>
+  <link th:href="@{/user/img/apple-touch-icon-114x114.png}" sizes="114x114" rel="apple-touch-icon"></head>
+  <link th:href="@{/user/css/theme.css}"  type="text/css" media="all" rel="stylesheet"></head>
+
+</head>
+
+<body>
+
+  <!-- Preloader -->
+  <div class="loader-mask">
+    <div class="loader">
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+
+  <main class="content-wrapper oh">
+    <div th:if="${addCardSuccessfull}" style="text-align: center;" class="alert alert-success fade in alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+      <h5><strong>Successfully Added to Cart! &nbsp;&nbsp;</strong>Now you can continue shopping or make purchasing.</h5>
+    </div>
+    <!-- Navigation -->
+    <header>
+      <div th:insert="user/navbar :: navbar"></div>
+    </header>
+
+    <!-- Breadcrumbs -->
+    <div class="container">
+      <ol class="breadcrumb">
+        <li>
+          <a th:href="@{/home/boombook}">Home</a>
+        </li>
+        <li>
+          <a th:href="@{/searchpage/listbooks/(clickedGeneralCategory=1)}">Category</a>
+        </li>
+        <li class="active">
+          Book Detail
+        </li>
+      </ol> <!-- end breadcrumbs -->
+    </div>
+
+
+    <!-- Single Product -->
+    <section class="section-wrap single-product">
+      <div class="container relative">
+        <div class="row">
+
+          <div style="text-align: center;" class="col-sm-4 col-xs-12 mb-60">
+            <img  style="height: 400px;" th:src="${theBookDetail.imageURL}" alt="" />
+          </div> <!-- end col img slider -->
+
+          <div class="col-sm-8 col-xs-12 product-description-wrap">
+            <h1 class="product-title" th:text="${theBookDetail.title}"></h1>
+            <h2 class="product-title" th:text="${theBookDetail.authorName}"></h2>
+
+            <!-- start Rate Of Book -->
+            <div th:if="${theRateOfBook.get(5)  &&  theRateOfBook.get(4)  &&  theRateOfBook.get(3)  && theRateOfBook.get(2) &&  theRateOfBook.get(1)}" >
+              <span class="fa fa-star"  style="color:#F0C71F"></span>
+              <span class="fa fa-star"  style="color:#F0C71F" ></span>
+              <span class="fa fa-star"  style="color:#F0C71F"></span>
+              <span class="fa fa-star"  style="color:#F0C71F"></span>
+              <span class="fa fa-star"  style="color:#F0C71F" ></span>
+            </div>
+            <div th:if="${!theRateOfBook.get(5) && theRateOfBook.get(4) && theRateOfBook.get(3) && theRateOfBook.get(2) && theRateOfBook.get(1)}" >
+              <span class="fa fa-star"  style="color:#F0C71F"></span>
+              <span class="fa fa-star"  style="color:#F0C71F" ></span>
+              <span class="fa fa-star"  style="color:#F0C71F"></span>
+              <span class="fa fa-star"  style="color:#F0C71F"></span>
+              <span class="fa fa-star"  style="color:#BEBEBE" ></span>
+            </div>
+            <div th:if="${!theRateOfBook.get(5) && !theRateOfBook.get(4) && theRateOfBook.get(3) && theRateOfBook.get(2) && theRateOfBook.get(1)}" >
+              <span class="fa fa-star"  style="color:#F0C71F"></span>
+              <span class="fa fa-star"  style="color:#F0C71F" ></span>
+              <span class="fa fa-star"  style="color:#F0C71F"></span>
+              <span class="fa fa-star"  style="color:#BEBEBE"></span>
+              <span class="fa fa-star"  style="color:#BEBEBE" ></span>
+            </div>
+            <div th:if="${!theRateOfBook.get(5) && !theRateOfBook.get(4) && !theRateOfBook.get(3) && theRateOfBook.get(2) && theRateOfBook.get(1)}" >
+              <span class="fa fa-star"  style="color:#F0C71F"></span>
+              <span class="fa fa-star"  style="color:#F0C71F" ></span>
+              <span class="fa fa-star"  style="color:#BEBEBE"></span>
+              <span class="fa fa-star"  style="color:#BEBEBE"></span>
+              <span class="fa fa-star"  style="color:#BEBEBE" ></span>
+            </div>
+            <div th:if="${!theRateOfBook.get(5) && !theRateOfBook.get(4) && !theRateOfBook.get(3) && !theRateOfBook.get(2) && theRateOfBook.get(1)}" >
+              <span class="fa fa-star"  style="color:#F0C71F"></span>
+              <span class="fa fa-star"  style="color:#BEBEBE" ></span>
+              <span class="fa fa-star"  style="color:#BEBEBE"></span>
+              <span class="fa fa-star"  style="color:#BEBEBE"></span>
+              <span class="fa fa-star"  style="color:#BEBEBE" ></span>
+            </div>
+            <div th:if="${theRateOfBook.get(0)}" >
+              <span class="fa fa-star"  style="color:#BEBEBE"></span>
+              <span class="fa fa-star"  style="color:#BEBEBE" ></span>
+              <span class="fa fa-star"  style="color:#BEBEBE"></span>
+              <span class="fa fa-star"  style="color:#BEBEBE"></span>
+              <span class="fa fa-star"  style="color:#BEBEBE" ></span>
+            </div>
+            <!-- end Rate Of Book -->
+
+            <b>
+              <p th:if="${theRateOfBook.get(0)}">Not rated yet</p>
+            </b>
+
+            <span class="price">
+              <del th:if="${theBookDetail.price!=theBookDetail.priceWithCampaign}">
+                <span th:text="'$'+${theBookDetail.price}"></span>
+              </del>
+              <ins>
+                <span class="ammount" th:text="'$'+${theBookDetail.priceWithCampaign}"></span>
+              </ins>
+            </span>
+            <p class="product-description" th:text="${theBookDetail.subject}"></p>
+
+<!--            <div class="select-options">
+              <div class="row row-20">
+                <div class="col-sm-6">
+                  &lt;!&ndash;<select class="color-select">
+                    <option value>Select</option>
+                    <option value="white">white</option>
+                  </select>&ndash;&gt;
+                </div>
+
+                <div class="col-sm-6">
+                  &lt;!&ndash;<select class="size-options">
+                    <option value>Select</option>
+                    <option value="XS">XS</option>
+                  </select>&ndash;&gt;
+                </div>
+              </div>
+            </div>-->
+            <div th:if="${theBookDetail.count==0}" class="alert alert-danger fade in alert-dismissible">
+              <!--<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>-->
+              <strong>Out of stock :( &nbsp;&nbsp;&nbsp;</strong> You can add to cart but you should wait for this book.
+            </div>
+            <form method="POST" th:action="@{/cart/addbooktocartinsearchPOST/(addedbookID=${theBookDetail.id},bookId=${theBookDetail.id},
+                                                                                                          clickedGeneralCategory=${(param.clickedGeneralCategory != null) ? param.clickedGeneralCategory : 0},
+                                                                                                          clickedCampaignCategory=${(param.clickedCampaignCategory != null) ? param.clickedCampaignCategory : 0},
+                                                                                                          clickedCategoryId=${(param.clickedCategoryId != null) ? param.clickedCategoryId : 0},
+                                                                                                          sortedBy=${(param.sortedBy != null) ? param.sortedBy : 'title'},
+                                                                                                          clickedSubcategoryId=${(param.clickedSubcategoryId != null) ? param.clickedSubcategoryId : 0},
+                                                                                                          page=${(param.page != null) ? param.page : 0},
+                                                                                                          searchForm=${(param.searchForm != null) ? param.searchForm : ''},
+                                                                                                          isComeFrom=${#httpServletRequest.requestURI}
+                                                                                                          )}">
+              <ul class="product-actions clearfix">
+                <li style="padding-top: 10px;">
+                    <button type="submit" th:if="${session.username.loggedin}" style="height:48px" class="btn btn-color btn-lg add-to-cart">Add to Cart</button>
+                    <a type="submit"  th:unless="${session.username.loggedin}" style="height:48px" th:href="@{/home/login}" class="btn btn-color btn-lg add-to-cart left"><span>Add to Cart</span></a>
+                </li>
+                <li>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </li>
+                <li style="padding-top: 10px;">
+
+                  <style>
+                    #memolishow {
+                      text-align: center;
+                      padding: 3px;
+                    }
+                    .qty {
+                      width: 40px;
+                      height: 25px;
+                      text-align: center;
+                    }
+                    input.qtyplus { width:25px; height:25px;}
+                    input.qtyminus { width:25px; height:25px;}
+                  </style>
+                  <form id='memolishow' method='POST' action='#'>
+                    <input style="width: 20%; height: 48px; background-color: #F26722; border: 0px; color: white;" type='button' value='-' class='qtyminus' field='count' />
+                    <input style="margin-bottom: 0px; width: 51.5%; padding: 0 0px; height: 44px" type='text' name='count' value='1' class='qty' />
+                    <input style="width: 20%; height: 48px; background-color: #F26722; border: 0px; color: white;" type='button' value='+' class='qtyplus' field='count' />
+                  </form>
+
+                  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+                  <script>
+                    jQuery(document).ready(function(){
+                      // This button will increment the value
+                      $('.qtyplus').click(function(e){
+                        // Stop acting like a button
+                        e.preventDefault();
+                        // Get the field name
+                        fieldName = $(this).attr('field');
+                        // Get its current value
+                        var currentVal = parseInt($('input[name='+fieldName+']').val());
+                        // If is not undefined
+                        if (!isNaN(currentVal)) {
+                          // Increment
+                          $('input[name='+fieldName+']').val(currentVal + 1);
+                        } else {
+                          // Otherwise put a 0 there
+                          $('input[name='+fieldName+']').val(0);
+                        }
+                      });
+                      // This button will decrement the value till 0
+                      $(".qtyminus").click(function(e) {
+                        // Stop acting like a button
+                        e.preventDefault();
+                        // Get the field name
+                        fieldName = $(this).attr('field');
+                        // Get its current value
+                        var currentVal = parseInt($('input[name='+fieldName+']').val());
+                        // If it isn't undefined or its greater than 0
+                        if (!isNaN(currentVal) && currentVal > 1) {
+                          // Decrement one
+                          $('input[name='+fieldName+']').val(currentVal - 1);
+                        } else {
+                          // Otherwise put a 0 there
+                          $('input[name='+fieldName+']').val(1);
+                        }
+                      });
+                    });
+
+                  </script>
+                </li>
+              </ul>
+            </form>
+
+            <div class="product_meta">
+              <span class="posted_in">Category: <a th:href="@{/searchpage/listbooks/(clickedCategoryId=${theBookDetail.subcategory.category.id})}" th:text="${theBookDetail.subcategory.category.title}"></a></span>
+              <span class="tagged_as">Subcategory: <a th:href="@{/searchpage/listbooks/(clickedSubcategoryId=${theBookDetail.subcategory.id})}" th:text="${theBookDetail.subcategory.title}"></a></span>
+              <span class="tagged_as">Publisher: <a th:href="@{/searchpage/searchkeyword/(searchForm=${theBookDetail.publisherName})}" th:text="${theBookDetail.publisherName}"></a></span>
+              <span class="tagged_as">Publish Year: <a th:href="@{/searchpage/searchkeyword/(searchForm=${theBookDetail.year})}" th:text="${theBookDetail.year}"></a></span>
+              <span class="sku">ISBN: <a th:text="${theBookDetail.isbn}"></a></span>
+              <span class="sku">Stock: <a th:text="${theBookDetail.count}"></a></span>
+            </div>
+ 
+          </div> <!-- end col product description -->
+        </div> <!-- end row -->
+
+        <!-- tabs -->
+        <div class="row">
+          <div class="col-md-12">
+            <div class="tabs tabs-bb">
+              <ul class="nav nav-tabs">                                 
+                <!--<li class="active">
+                  <a href="#tab-description" data-toggle="tab">Subject</a>
+                </li> -->
+                <li>
+                  <a href="#tab-reviews" data-toggle="tab">Reviews</a>
+                </li>                                 
+              </ul> <!-- end tabs -->
+              
+              <!-- tab content -->
+              <div class="tab-content">
+                
+                <!-- Start subject of Books -->
+                <!--<div class="tab-pane fade in active" id="tab-description">
+                  <p>
+                  We possess within us two minds. So far I have written only of the conscious mind. I would now like to introduce you to your second mind, the hidden and mysterious subconscious. Our subconscious mind contains such power and complexity that it literally staggers the imagination.And finally the subconscious is the mechanism through which thought impulses which are repeated regularly with feeling and emotion are quickened, charged. Our subconscious mind contains such power and complexity that it literally staggers the imagination.And finally the subconscious is the mechanism through which thought impulses.
+                  </p>
+                </div> -->
+                <!-- End subject of Books -->
+
+                <!-- Start subject of Books -->
+                <div class="tab-pane fade in active" id="tab-reviews">
+                  <div class="reviews">
+                    <ul class="reviews-list">
+                      <li th:if="${theBookComments.isEmpty()}">
+                          <h2 style="color: #979797;text-align: center">Not found any comment</h2>
+                      </li>
+                      <li th:unless="${theBookComments.isEmpty()}" th:each="comments:${theBookComments}">
+                        <div class="review-body">
+                          <div class="review-content">
+
+                            <p class="review-author">
+                              <div style="">
+                                <strong th:text="${comments.customer.customerName}">
+                                </strong>
+                                <span th:text="' - '+${comments.addedDate}"></span>
+                              </div>
+                            </p>
+
+
+
+                            <!-- start Rate Of Book -->
+                            <div th:if="${comments.rate==5.0}" >
+                              <span class="fa fa-star"  style="color:#F0C71F"></span>
+                              <span class="fa fa-star"  style="color:#F0C71F" ></span>
+                              <span class="fa fa-star"  style="color:#F0C71F"></span>
+                              <span class="fa fa-star"  style="color:#F0C71F"></span>
+                              <span class="fa fa-star"  style="color:#F0C71F" ></span>
+                            </div>
+                            <div th:if="${comments.rate==4.0}" >
+                              <span class="fa fa-star"  style="color:#F0C71F"></span>
+                              <span class="fa fa-star"  style="color:#F0C71F" ></span>
+                              <span class="fa fa-star"  style="color:#F0C71F"></span>
+                              <span class="fa fa-star"  style="color:#F0C71F"></span>
+                              <span class="fa fa-star"  style="color:#BEBEBE" ></span>
+                            </div>
+                            <div th:if="${comments.rate==3.0}" >
+                              <span class="fa fa-star"  style="color:#F0C71F"></span>
+                              <span class="fa fa-star"  style="color:#F0C71F" ></span>
+                              <span class="fa fa-star"  style="color:#F0C71F"></span>
+                              <span class="fa fa-star"  style="color:#BEBEBE"></span>
+                              <span class="fa fa-star"  style="color:#BEBEBE" ></span>
+                            </div>
+                            <div th:if="${comments.rate==2.0}" >
+                              <span class="fa fa-star"  style="color:#F0C71F"></span>
+                              <span class="fa fa-star"  style="color:#F0C71F" ></span>
+                              <span class="fa fa-star"  style="color:#BEBEBE"></span>
+                              <span class="fa fa-star"  style="color:#BEBEBE"></span>
+                              <span class="fa fa-star"  style="color:#BEBEBE" ></span>
+                            </div>
+                            <div th:if="${comments.rate==1.0}" >
+                              <span class="fa fa-star"  style="color:#F0C71F"></span>
+                              <span class="fa fa-star"  style="color:#BEBEBE" ></span>
+                              <span class="fa fa-star"  style="color:#BEBEBE"></span>
+                              <span class="fa fa-star"  style="color:#BEBEBE"></span>
+                              <span class="fa fa-star"  style="color:#BEBEBE" ></span>
+                            </div>
+                            <!-- end Rate Of Book -->
+
+                            <b>
+                              <p th:if="${comments.rate==0}">Not rated yet</p>
+                            </b>
+                            <p th:text="${comments.user_comment}"></p>
+                          </div>
+                        </div>
+                      </li> 
+
+
+                      <li>
+                        <br><br>
+                        <p><strong>Rate & Comment</strong> <p>
+
+                        <div th:if="${!commentAbilityChecker.isMakePurchase() || !session.username.loggedin}" class="alert alert-warning fade in alert-dismissible" role="alert">
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                          <strong>Buy This Book!</strong> If you didn't buy, you can't make comment.
+                        </div>
+
+                        <div th:if="${commentAbilityChecker.isMakeComment() && session.username.loggedin}" class="alert alert-warning fade in alert-dismissible" role="alert">
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                          <strong>You made comment already!</strong>
+                        </div>
+
+                        <form method="POST" th:action="@{/product/addcomment}" th:object="${bookComment}">
+                            <fieldset class="ratingG">
+                              <input type="radio" id="star5" name="ratingG" th:field="*{rate}" value="5" /> <label class = "full" for="star5" title="Awesome - 5 stars"></label>
+                              <input type="radio" id="star4" name="ratingG" th:field="*{rate}" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
+                              <input type="radio" id="star3" name="ratingG" th:field="*{rate}" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>
+                              <input type="radio" id="star2" name="ratingG" th:field="*{rate}" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
+                              <input type="radio" id="star1" name="ratingG" th:field="*{rate}" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
+                            </fieldset>
+                            <textarea th:field="*{user_comment}" maxlength="600" placeholder="Textarea" rows="5"></textarea>
+                            <input th:field="*{customer}" th:value="${bookComment.customer}" hidden>
+                            <input th:field="*{book}" th:value="${bookComment.book}" hidden>
+                            <button th:if="${commentAbilityChecker.isMakePurchase() && !commentAbilityChecker.isMakeComment()}" type="submit" class="btn btn-md btn-color">Send</button>
+                            <a th:if="${!commentAbilityChecker.isMakePurchase() || commentAbilityChecker.isMakeComment()}" class="btn btn-md btn-color" style="background-color: #FAC48D"><span>Send</span></a>
+
+                      </form>
+
+                      </li>
+
+
+                    </ul>         
+                  </div> <!--  end reviews -->
+                </div> <!-- End subject of Books -->
+
+              </div> <!-- end tab content -->
+
+            </div>
+          </div> <!-- end tabs -->
+        </div> <!-- end row -->
+
+        
+      </div> <!-- end container -->
+    </section> <!-- end single product -->
+
+
+
+    <!-- Footer Type-1 -->
+    <footer class="footer footer-type-1 bg-white">
+      <div th:insert="user/footer :: footer"></div>
+
+    </footer> <!-- end footer -->
+
+    <div id="back-to-top">
+      <a href="#top"><i class="fa fa-angle-up"></i></a>
+    </div>
+
+  </main> <!-- end main-wrapper -->
+
+  <!-- jQuery Scripts -->
+  <script type="text/javascript" th:src="@{/user/js/jquery.min.js}"></script>
+  <script type="text/javascript" th:src="@{/user/js/bootstrap.min.js}"></script>
+  <script type="text/javascript" th:src="@{/user/js/plugins.js}"></script>
+  <script type="text/javascript" th:src="@{/user/js/scripts.js}"></script>
+
+</body>
+</html>

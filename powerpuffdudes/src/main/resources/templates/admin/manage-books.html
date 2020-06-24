@@ -1,0 +1,653 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Language" content="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>BoomBook Bookstore</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
+    <meta name="description" content="This is an example dashboard created using build-in elements and components.">
+    <meta name="msapplication-tap-highlight" content="no">
+    <!--
+    =========================================================
+    * ArchitectUI HTML Theme Dashboard - v1.0.0
+    =========================================================
+    * Product Page: https://dashboardpack.com
+    * Copyright 2019 DashboardPack (https://dashboardpack.com)
+    * Licensed under MIT (https://github.com/DashboardPack/architectui-html-theme-free/blob/master/LICENSE)
+    =========================================================
+    * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+    -->
+    <link th:href="@{/admin/main.css}" rel="stylesheet"></head>
+<body>
+<div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
+    <div class="app-header header-shadow bg-dark header-text-light">
+        <div class="app-header__logo">
+            <div class="logo-src"></div>
+            <div class="header__pane ml-auto">
+                <div>
+                    <button type="button" class="hamburger close-sidebar-btn hamburger--elastic" data-class="closed-sidebar">
+                            <span class="hamburger-box">
+                                <span class="hamburger-inner"></span>
+                            </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="app-header__mobile-menu">
+            <div>
+                <button type="button" class="hamburger hamburger--elastic mobile-toggle-nav">
+                        <span class="hamburger-box">
+                            <span class="hamburger-inner"></span>
+                        </span>
+                </button>
+            </div>
+        </div>
+        <div class="app-header__menu">
+                <span>
+                    <button type="button" class="btn-icon btn-icon-only btn btn-primary btn-sm mobile-toggle-header-nav">
+                        <span class="btn-icon-wrapper">
+                            <i class="fa fa-ellipsis-v fa-w-6"></i>
+                        </span>
+                    </button>
+                </span>
+        </div>
+        <div class="app-header__content">
+
+
+
+            <!-- search BOX -->
+        <div class="app-header-left">
+            <form  class="form-inline mr-auto" th:action="@{/managebooks/searchbook}" th:object="${searchForm}" method="POST">
+                <input class="form-control" th:field="*{searchKey}"  type="text" placeholder="Type to search" aria-label="Search">
+                <button class="btn btn-success btn-rounded btn-sm my-0 ml-sm-2" type="submit">Search</button>
+            </form>
+        </div>
+            <!-- search BOX -->
+
+
+
+        <div class="app-header-right">
+            <div class="header-btn-lg pr-0">
+                <div class="widget-content p-0">
+                    <div class="widget-content-wrapper">
+
+                        <div class="widget-content-right header-user-info ml-3">
+
+                                    <a th:href="@{/home/logout}" >
+                                        <button  class="mb-2 mr-2 btn btn-danger" >
+                                            <i class="nav-link-icon fa fa-cog"></i>
+                                            <font color="white">Log Out</font>
+                                        </button>
+
+                                    </a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>        </div>
+    </div>
+    </div>
+
+    <div class="app-main">
+
+        <div class="app-sidebar sidebar-shadow bg-dark sidebar-text-light">
+            <div class="app-header__logo">
+                <div class="logo-src"></div>
+                <div class="header__pane ml-auto">
+                    <div>
+                        <button type="button" class="hamburger close-sidebar-btn hamburger--elastic" data-class="closed-sidebar">
+                                    <span class="hamburger-box">
+                                        <span class="hamburger-inner"></span>
+                                    </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="app-header__mobile-menu">
+                <div>
+                    <button type="button" class="hamburger hamburger--elastic mobile-toggle-nav">
+                                <span class="hamburger-box">
+                                    <span class="hamburger-inner"></span>
+                                </span>
+                    </button>
+                </div>
+            </div>
+            <div class="app-header__menu">
+                        <span>
+                            <button type="button" class="btn-icon btn-icon-only btn btn-primary btn-sm mobile-toggle-header-nav">
+                                <span class="btn-icon-wrapper">
+                                    <i class="fa fa-ellipsis-v fa-w-6"></i>
+                                </span>
+                            </button>
+                        </span>
+            </div>    <div class="scrollbar-sidebar">
+
+            <div  th:insert="admin/side-navbar :: side-navbar-admin">
+                <!-- side navbar reached from outside -->
+            </div>
+
+        </div>
+        </div>
+
+        <div class="app-main__outer">
+            <div class="app-main__inner">
+
+                <div class="app-page-title">
+                    <div class="page-title-wrapper">
+                        <div class="page-title-heading">
+
+                            <div>Manage Books
+                                <div class="page-title-subheading">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="page-title-actions">
+
+                            <div class="d-inline-block dropdown">
+                                <a th:href="@{/managebooks/add-book}">
+                                    <button class="mb-2 mr-2 btn btn-secondary">Add Book
+                                    </button>
+                                </a>
+
+                                <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                            <a href="javascript:void(0);" class="nav-link">
+                                                <i class="nav-link-icon lnr-inbox"></i>
+                                                <span>
+                                                            Inbox
+                                                        </span>
+                                                <div class="ml-auto badge badge-pill badge-secondary">86</div>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="javascript:void(0);" class="nav-link">
+                                                <i class="nav-link-icon lnr-book"></i>
+                                                <span>
+                                                            Book
+                                                        </span>
+                                                <div class="ml-auto badge badge-pill badge-danger">5</div>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="javascript:void(0);" class="nav-link">
+                                                <i class="nav-link-icon lnr-picture"></i>
+                                                <span>
+                                                    Picture
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a disabled href="javascript:void(0);" class="nav-link disabled">
+                                                <i class="nav-link-icon lnr-file-empty"></i>
+                                                <span>
+                                                            File Disabled
+                                                        </span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>    </div>
+                </div>
+
+
+                <div class="row">
+
+                    <div class="col-md-6 col-xl-4">
+                        <div class="card mb-3 widget-content bg-midnight-bloom">
+                            <div class="widget-content-wrapper text-white">
+                                <div class="widget-content-left">
+                                    <div class="widget-heading">Total Book</div>
+                                </div>
+                                <!-- Count of Books -->
+                                <div class="widget-content-right">
+                                    <div class="widget-numbers text-white">
+                                        <form class="needs-validation" novalidate action="#" th:action="@{/managebooks/listbooks}" th:object="${totalCount}" method="POST">
+                                            <span th:text="${totalCount.count}"> </span>
+                                        </form>
+                                    </div>
+                                </div>
+                                <!-- Count of Books -->
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <!-- ISBN ERROR MESSAGE -->
+                <div th:if="${session.Currentisbn.isComeFromAddBook}">
+
+                    <div th:if="${session.Currentisbn.isCurrent_isbn} ">
+                        <div class="alert alert-success" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="alert-heading">The book added succesfuly !</h4>
+                            <p>Saving the book process is succesfull !</p>
+                            <hr>
+                            <p class="mb-0">You can update the count of the book via "update" button</p>
+
+                        </div>
+                    </div>
+
+                    <div th:unless="${session.Currentisbn.isCurrent_isbn}">
+                        <div class="alert alert-danger" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="alert-heading">ISBN ERROR!</h4>
+                            <p>The book you are intended to add has the same ISBN number with other book</p>
+                            <hr>
+                            <p class="mb-0">Please use "update" button to change the count of the book</p>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!--Aybar list can be scrollable --> <!-- MEMET-->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div  style="overflow-x:scroll;" class="main-card mb-3 card">
+
+                            <div class="card-body"><h5 class="card-title">Books</h5>
+                                <table class="mb-0 table">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Photo</th>
+                                        <th>Title <br>-<br>ISBN</th>
+                                        <th>Author <br>-<br>Publisher</th>
+                                        <th>
+                                            Publish Year<br>-<br>
+                                            Added Date
+                                        </th>
+                                        <th>Category <br>-<br>Subcategory
+                                        <th>Count</th>
+                                        <th>Price <br>-<br>Campaign Percentage</th>
+                                        <th>Subject</th>
+                                        <th class="text-center">Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr data-target="#deleteModal" data-toggle="model" th:each="books:${thebooks}">
+                                        <td style="width: 5%" th:text="${books.getId()}"></td>
+                                        <td style="width: 15%">
+                                            <img th:src="${ books.imageURL}" width="80" height="121">
+                                        </td>
+                                        <td style="width: 10%">
+                                            <p style="width: 150px; white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" th:text="${books.getTitle()}"></p>
+                                            -
+                                            <p style="width: 150px; white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" th:text="${books.isbn}"></p>
+                                        </td>
+                                        <td style="width: 10%">
+                                            <p th:text="${books.authorName}"></p>
+                                            -
+                                            <p th:text="${books.publisherName}"></p>
+                                        </td>
+                                        <td style="width: 10%">
+                                            <p th:text="${books.year}"></p>
+                                            -
+                                            <p th:text="${books.addedDate}"></p>
+                                        </td>
+
+                                        <td style="width: 10%">
+                                            <p th:text="${(books.subcategory.category!=null) ? books.getSubcategory().getCategory().getTitle() : 'General'}"></p>
+                                            -
+                                            <p th:text="${books.getSubcategory().getTitle()}"></p>
+                                        </td>
+
+                                        <td style="width: 5%">
+                                            <p th:text="${books.count}"></p>
+                                        </td>
+
+                                        <td style="width: 10%">
+                                            <p th:text="${books.price}+'$'"></p>
+                                            -
+                                            <p th:text="${books.campaign != null} ? ${books.campaign.getDiscountPercentage()}+ '%' : 0 + '%'"></p>
+                                        </td>
+                                        <td style="width: 15%; ">
+
+                                            <p style="width: 150px; white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" th:text="${books.subject}"></p>
+
+                                        </td>
+                                        <!-- MEMET-->
+                                        <td style="width: 15%" class="text-center">
+                                            <div class="row justify-content-md-center">
+                                                <button type="button" class="btn mr-2 mb-2 btn-primary" style="width: 140px" data-toggle="modal" data-target="#addCampaignModal" th:attrappend="data-target=${books.id}">
+                                                    Update Campaign
+                                                </button>
+                                            </div>
+                                            <!-- MEMET-->
+                                            <div class="row justify-content-md-center">
+                                                <form action="#" th:action="@{/managebooks/deletebook}" method="POST">
+                                                    <input type="hidden" name="bookId" th:value="${books.id}">
+                                                    <button type="submit" class="mb-2 mr-2 btn btn-danger" style="width: 140px" onclick="if (!(confirm('Are you sure you want to delete this book?'))) return false">
+                                                        Delete
+                                                    </button>
+                                                </form>
+                                            </div>
+                                            <!-- MEMET-->
+                                            <div class="row justify-content-md-center">
+                                                <form action="#" th:action="@{/managebooks/update-book}" method="POST">
+                                                    <input type="hidden" name="bookId" th:value="${books.id}">
+                                                        <button type="submit" class="mb-2 mr-2 btn btn-info" style="width: 140px">Update
+                                                        </button>
+                                                </form>
+                                            </div>
+
+                                            <!-- Campaign Modal --> <!-- th:attrappend="id=${books.id}" -->
+                                            <div>
+                                                <div class="modal fade" id="addCampaignModal" th:attrappend="id=${books.id}"
+                                                     tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h6 class="modal-title" id="addCampaignModalLabel" >
+                                                                    <br> Select campaign percentage
+                                                                </h6>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true"> <br> &times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+
+                                                                <div class="card-body">
+                                                                    <div class="form-group">
+                                                                        <form class="needs-validation" novalidate action="#" th:action="@{/managebooks/add-campaign}" th:object="${campaignButton}" method="POST">
+                                                                            <label class="col-form-label">Campaign Image</label>
+
+                                                                            <input th:field="*{imageUrl}" name="email" id="exampleTitle" placeholder="write image url" type="url" class="form-control" required>
+                                                                            <div class="invalid-feedback">
+                                                                                    Please write a valid path.
+                                                                            </div>
+
+                                                                            <label class="col-form-label">Campaign Note</label>
+
+                                                                            <input th:field="*{note}" name="text" id="exampletext" placeholder="write note" type="text" class="form-control" required>
+                                                                            <div class="invalid-feedback">
+                                                                                    Please write a note.
+                                                                            </div>
+
+                                                                            <label class="col-form-label" for="showDuration">Percentage</label>
+                                                                            <input th:field="*{campaignPercentage}" max="100" min="0" id="showDuration" type="number" placeholder="percentage" class="form-control">
+
+                                                                            <div class="modal-footer">
+
+                                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                                <input type="hidden" name="abookId" th:value="${books.id}">
+                                                                                <button type="submit" class="btn btn-primary">Save changes</button>
+
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Campaign Modal -->
+
+
+
+                                            <!--
+                                             Add Campaign Modal start
+                                            <div class="modal fade" id="addCampaignModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel" th:text="${books.id}">Select a Campaign Percentage</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+
+
+                                                            <div class="card-body">
+                                                                <div class="form-group">
+                                                                    <label class="form-label" for="showDuration">Percentage</label>
+                                                                    <input max="100" min="0" id="showDuration" type="number" placeholder="ms" class="form-control" value="0">
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                             Add Category Modal finish -->
+
+                                        </td>
+
+
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="d-block text-center card-footer">
+                                <div style="display: inline-block;text-align:center">
+                                    <ul class="nav nav-pills">
+
+                                        <li class="nav-item"
+                                            th:each="i : ${#numbers.sequence(0,(thebooks.totalPages)-1)}" >
+                                            <a th:href="@{/managebooks/listbooks/(page=${i})}" th:text="${i}" class="nav-link"> </a>
+                                        </li>
+                                    </ul>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!--<div class="app-wrapper-footer">
+                <div class="app-footer">
+                    <div class="app-footer__inner">
+                        <div class="app-footer-left">
+                            <ul class="nav">
+                                <li class="nav-item">
+                                    <a href="javascript:void(0);" class="nav-link">
+                                        Footer Link 1
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="javascript:void(0);" class="nav-link">
+                                        Footer Link 2
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="app-footer-right">
+                            <ul class="nav">
+                                <li class="nav-item">
+                                    <a href="javascript:void(0);" class="nav-link">
+                                        Footer Link 3
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="javascript:void(0);" class="nav-link">
+                                        <div class="badge badge-success mr-1 ml-0">
+                                            <small>NEW</small>
+                                        </div>
+                                        Footer Link 4
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>-->    </div>
+        <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
+    </div>
+
+
+</div>
+
+
+<script type="text/javascript" th:src="@{/admin/scripts/main.js}"></script>
+</body>
+
+<!--
+
+    Are you sure modal
+<div class="modal modal-warning fade in" th:id="deleteModal+${books.id }" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteLabel">Are you sure!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button th:action="@{/deletebook}" th:object="${books}" method="post" type="button" class="btn btn-primary">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+Are you sure modal
+
+-->
+
+</html>
+
+
+
+
+<!--
+
+&lt;!&ndash; Modal &ndash;&gt;
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+-->
+
+
+
+
+
+
+
+<!--<tr>
+                                        <th scope="row">2</th>
+                                        <td>
+                                            <img src="admin/images/book-photos/book2.jpg"
+                                            style="width:50%;">
+                                        </td>
+                                        <td>Norse Mithology<br>-<br>1234-1234-1235
+                                        </td>
+                                        <td>Neil Gailman<br>-<br>Atlas Books
+                                        </td>
+                                        <td>
+                                            2001<br>-<br>
+                                            03.04.2020
+                                        </td>
+                                        <td>Novel<br>-<br>History
+                                        </td>
+                                        <td>
+                                            35
+                                        </td>
+                                        <td>
+                                            23,25$
+                                        </td>
+                                        <td>
+                                            In here, there will be subject of the book
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="row justify-content-md-center">
+                                                <button type="button" class="btn mr-2 mb-2 btn-primary" data-toggle="modal" data-target="#addCampaignModal">
+                                                    Add Campaign
+                                                </button>
+                                            </div>
+                                            <div class="row justify-content-md-center">
+                                                <button class="mb-2 mr-2 btn btn-danger"
+                                                style="padding-left: 36px;padding-right: 36px">Delete
+                                                </button>
+                                            </div>
+                                            <a th:href="@{/update-book.html}">
+                                                <div class="row justify-content-md-center">
+                                                    <button class="mb-2 mr-2 btn btn-info"
+                                                    style="padding-left: 35px;padding-right: 35px">Update
+                                                    </button>
+                                                </div>
+                                            </a>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td>
+                                            <img src="admin/images/book-photos/book3.jpg"
+                                            style="width:50%;">
+                                        </td>
+                                        <td>It<br>-<br>1234-1234-1236
+                                        </td>
+                                        <td>Stephen King<br>-<br>Anka Books
+                                        </td>
+                                        <td>
+                                            2001<br>-<br>
+                                            03.04.2020
+                                        </td>
+                                        <td>Novel<br>-<br>Horror
+                                        </td>
+                                        <td>
+                                            35
+                                        </td>
+                                        <td>
+                                            23,25
+                                        </td>
+                                        <td>
+                                            In here, there will be subject of the book
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="row justify-content-md-center">
+                                                <button type="button" class="btn mr-2 mb-2 btn-primary" data-toggle="modal" data-target="#addCampaignModal">
+                                                    Add Campaign
+                                                </button>
+                                            </div>
+                                            <div class="row justify-content-md-center">
+                                                <button class="mb-2 mr-2 btn btn-danger"
+                                                style="padding-left: 36px;padding-right: 36px">Delete
+                                                </button>
+                                            </div>
+                                            <a th:href="@{/update-book.html}">
+                                                <div class="row justify-content-md-center">
+                                                    <button class="mb-2 mr-2 btn btn-info"
+                                                    style="padding-left: 35px;padding-right: 35px">Update
+                                                    </button>
+                                                </div>
+                                            </a>
+
+                                        </td>
+                                    </tr>-->

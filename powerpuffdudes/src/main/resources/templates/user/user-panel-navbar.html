@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <title>BoomBook | Orders</title>
+
+    <meta charset="utf-8">
+    <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="">
+
+    <!-- Google Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Maven+Pro:400,700%7CRaleway:300,400,700%7CPlayfair+Display:700' rel='stylesheet'>
+
+    <!-- Css -->
+    <link th:href="@{/user/css/sidenavbar.css}" rel="stylesheet">
+    <link th:href="@{/user/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/user/css/font-icons.css}" rel="stylesheet">
+    <link th:href="@{/user/css/style.css}" rel="stylesheet">
+
+
+    <!-- Favicons -->
+
+</head>
+
+<body>
+
+<div class="loader-mask">
+    <div class="loader">
+        <div></div>
+        <div></div>
+    </div>
+</div>
+
+<div  th:fragment="user-panel-navbar" class="sidebar">
+    <br>
+
+    <a th:href="@{/home/boombook}" class="firstlink"  id= "firstlink" href="#home" style="background-color: #F26722;"> <i class="fa fa-home fa-lg"> </i>  BoomBook Home</a>
+    <a th:href="@{/user/profile}"><i class="fa fa-user  fa-lg" aria-hidden="true"></i>   Profile</a>
+    <a th:href="@{/user/currentDeliveries}"> <i class="fa fa-shopping-cart  fa-lg" aria-hidden="true"></i>   Orders</a>
+    <a th:href= "@{/user/deliveryHistory}"> <i class="fa fa-shopping-cart  fa-lg" aria-hidden="true"></i>   Delivery History</a>
+
+
+
+</div>
+
+
+<!-- jQuery Scripts -->
+<script type="text/javascript" th:src="@{/user/js/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/user/js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/user/js/plugins.js}"></script>
+<script type="text/javascript" th:src="@{/user/js/scripts.js}"></script>
+
+</body>
+</html>

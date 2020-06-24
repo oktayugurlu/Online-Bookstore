@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>BoomBook Store</title>
+
+  <meta charset="utf-8">
+  <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="">
+  
+  <!-- Google Fonts -->
+  <link href='http://fonts.googleapis.com/css?family=Maven+Pro:400,700%7CRaleway:300,400,700%7CPlayfair+Display:700' rel='stylesheet'>
+
+<!--
+
+         <link th:href="@{/user/css/animate.min.css}" rel="stylesheet">
+          <link th:href="@{/user/css/style.css}" rel="stylesheet">
+         -->
+
+  <link th:href="@{/user/css/bootstrap.min.css}" rel="stylesheet">
+  <link th:href="@{/user/css/magnific-popup.css}" rel="stylesheet">
+  <link th:href="@{/user/css/font-icons.css}" rel="stylesheet">
+  <link th:href="@{/user/css/sliders.css}" rel="stylesheet">
+
+
+  <link th:href="@{/user/css/table.css}" rel="stylesheet">
+
+  <script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js}"></script>
+  <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js}" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
+  <link th:rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css}" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
+  <style>
+
+
+  </style>
+
+
+  <!-- Favicons -->
+
+  <link th:href="@{/user/img/boombook-logo.png}" rel="shortcut icon">
+  <link th:href="@{/user/img/apple-touch-icon.png}" rel="apple-touch-icon">
+  <link th:href="@{/user/img/apple-touch-icon-72x72.png}" sizes="72x72" rel="apple-touch-icon">
+  <link th:href="@{/user/img/apple-touch-icon-114x114.png}" sizes="114x114" rel="apple-touch-icon">
+
+
+  <!-- external olanlar için-->
+
+</head>
+
+<!--<div th:insert="user/navbar :: navbar"></div> -->
+<body class="relative">
+
+
+    <div class="loader-mask">
+    <div class="loader">
+      <div></div>
+    </div>
+  </div>
+
+
+  <!-- Preloader -->
+
+
+  <main class="content-wrapper oh">
+
+  <!--  <div th:insert="user/navbar :: navbar"></div> -->
+
+  <br> <hr><br>
+
+
+    <h2 class="heading relative uppercase text-center mb-0 mt-40" id="firstWriting" style="">Book Comparison</h2>
+
+    <br> <br>
+
+    <div class="row" style="margin-left: 10%;margin-right: 10% ">
+      <div class="text-center">
+
+
+
+      <form  th:action="@{/boombook/compareprocess}" th:object="${BookComparisonForm}" method="post">
+
+      <div class="col-sm-6" style="width: 45%">
+
+
+        <label for="book1" class="">Select a book:</label>
+        <select  class="form-control" th:field="*{firstBook}"  name="category" id="book1">
+
+          <option th:each="bookName : ${compareBooks}" th:value="${bookName.getId()}"
+                  th:text="${bookName.getTitle()}"  ></option>
+        </select>
+
+
+      </div> <!-- end col -->
+
+      <div class="col-sm-6" style="width: 45%;">
+
+        <label for="book2" class="">Select a book:</label>
+        <select class="form-control" th:field="*{secondBook}"  name="category" id="book2">
+
+          <option th:each="bookName : ${compareBooks}" th:value="${bookName.getId()}"
+                  th:text="${bookName.getTitle()}" ></option>
+        </select>
+
+        <br>
+
+      </div> <!-- end col -->
+
+
+        <button type="submit" class="btn btn-orange btn-lg" style="background-color: #F26722;color: whitesmoke;box-sizing: border-box; padding: 12px 27px;
+      font-size:11px;cursor:pointer;font-family:sans-serif;
+      font-weight: 300;
+      left: -5%;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      text-decoration: none;
+      text-align: center;
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+      border: none;border-radius: 0px">Compare Books</button>
+
+
+        <a th:href="@{/home/boombook}"  style="background-color: #F26722;color: whitesmoke;box-sizing: border-box; padding: 12px 27px;
+      font-size:11px;cursor:pointer;font-family:sans-serif;
+      font-weight: 300;
+      left: -5%;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      text-decoration: none;
+      text-align: center;
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+      margin-top: 1px;
+      border: none;border-radius: 0px">
+         Back to Homepage
+
+        </a>
+
+      </form>
+
+      </div>
+
+
+    </div> <!-- end row -->
+
+    <br> <br>
+
+    <div th:if="${!BookComparisonStage.firstRequest}">
+
+    <div class="comparisonTable">
+      <div class="compTableCell"></div>
+      <div class="compTableCell ">
+
+        <div style="position: relative;text-align: center;height:300px;">
+
+          <img  class="imageFilter" th:src="${BookComparisonStage.getFirstBook().getImageURL()}" style="width:100%;height: 100%;display:block;" />
+
+          <div style="position: absolute; top: 80%;width:100%;left: 50%;transform: translate(-50%, -50%);font-size: large;">
+
+            <h2 style="background-color: rgba(242, 103, 34,0.7);color: rgb(232, 248, 248);border-radius: 10px;" th:text="${BookComparisonStage.firstBook.getTitle()}" ></h2> </div>
+
+           </div>
+
+      </div>
+
+      <div class="compTableCell">
+
+        <div style="position: relative;text-align: center;height:300px;">
+
+          <img class="imageFilter" th:src="${BookComparisonStage.getSecondBook().getImageURL()}" style="width:100%;height: 100%;display: block;" />
+
+          <div style="position: absolute;
+        top: 80%;
+        width: 100%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: large;"> <h2 style="background-color: rgba(242, 103, 34,0.7);color:rgb(232, 248, 248);border-radius: 10px;" th:text="${BookComparisonStage.secondBook.getTitle()}" ></h2> </div>
+
+        </div>
+
+      </div>
+
+      <div class="compTableCell cell-feature">Author Name</div>
+      <div class="compTableCell" th:text="${BookComparisonStage.firstBook.getAuthorName()}"></div>
+      <div class="compTableCell" th:text="${BookComparisonStage.secondBook.getAuthorName()}"></div>
+
+      <div class="compTableCell cell-feature">Category</div>
+      <div class="compTableCell" th:text="${BookComparisonStage.getCategories().get(0).getTitle()}"></div>
+      <div class="compTableCell" th:text="${BookComparisonStage.getCategories().get(1).getTitle()}"></div>
+
+
+      <div class="compTableCell cell-feature">Publisher</div>
+      <div class="compTableCell" th:text="${BookComparisonStage.getFirstBook().getPublisherName()}"></div>
+      <div class="compTableCell"  th:text="${BookComparisonStage.getSecondBook().getPublisherName()}" ></div>
+
+      <div class="compTableCell cell-feature">Published Year</div>
+      <div class="compTableCell" th:text="${BookComparisonStage.getFirstBook().getYear()}" ></div>
+      <div class="compTableCell" th:text="${BookComparisonStage.getSecondBook().getYear()}"></div>
+
+      <div class="compTableCell cell-feature">ISBN</div>
+      <div class="compTableCell" th:text="${BookComparisonStage.getFirstBook().getIsbn()}"> </div>
+      <div class="compTableCell" th:text="${BookComparisonStage.getSecondBook().getIsbn()}" ></div>
+
+      <div class="compTableCell cell-feature">Count</div>
+      <div class="compTableCell" th:text="${BookComparisonStage.getFirstBook().getCount()}">  </div>
+      <div class="compTableCell" th:text="${BookComparisonStage.getSecondBook().getCount()}"></div>
+
+      <div class="compTableCell cell-feature">Rate</div>
+
+
+      <div class="compTableCell">
+
+          <div th:if="${BookComparisonStage.isShowFirstRate() }">
+
+            <div th:if="${BookComparisonStage.getRatings().get(0)} == 1" >
+
+              <span class="fa fa-star" style="color:#F0C71F"></span>
+              <span class="fa fa-star"  style="color:#BEBEBE"></span>
+              <span class="fa fa-star"  style="color:#BEBEBE"></span>
+              <span class="fa fa-star"  style="color:#BEBEBE"></span>
+              <span class="fa fa-star"  style="color:#BEBEBE" ></span>
+
+            </div>
+
+
+            <div th:if="${BookComparisonStage.getRatings().get(0)} == 2" >
+
+              <span class="fa fa-star" style="color:#F0C71F"></span>
+              <span class="fa fa-star" style="color:#F0C71F"></span>
+              <span class="fa fa-star"  style="color:#BEBEBE"></span>
+              <span class="fa fa-star"  style="color:#BEBEBE"></span>
+              <span class="fa fa-star"  style="color:#BEBEBE" ></span>
+
+            </div>
+
+            <div th:if="${BookComparisonStage.getRatings().get(0)} == 3" >
+
+              <span class="fa fa-star" style="color:#F0C71F"></span>
+              <span class="fa fa-star" style="color:#F0C71F"></span>
+              <span class="fa fa-star" style="color:#F0C71F"></span>
+              <span class="fa fa-star"  style="color:#BEBEBE"></span>
+              <span class="fa fa-star"  style="color:#BEBEBE" ></span>
+
+            </div>
+
+            <div th:if="${BookComparisonStage.getRatings().get(0)} == 4" >
+
+              <span class="fa fa-star " style="color:#F0C71F"></span>
+              <span class="fa fa-star " style="color:#F0C71F"></span>
+              <span class="fa fa-star " style="color:#F0C71F"></span>
+              <span class="fa fa-star " style="color:#F0C71F"></span>
+              <span class="fa fa-star "  style="color:#BEBEBE"></span>
+
+            </div>
+
+            <div th:if="${BookComparisonStage.getRatings().get(0)} == 5" >
+
+              <span class="fa fa-star " style="color:#F0C71F"></span>
+              <span class="fa fa-star " style="color:#F0C71F"></span>
+              <span class="fa fa-star " style="color:#F0C71F"></span>
+              <span class="fa fa-star " style="color:#F0C71F"></span>
+              <span class="fa fa-star " style="color:#F0C71F"></span>
+            </div>
+
+          </div>
+
+
+        <div th:if="${!BookComparisonStage.isShowFirstRate()}">
+          <div>No rating exists </div>
+        </div>
+      </div>
+
+      <div class="compTableCell">
+
+        <div th:if="${BookComparisonStage.isShowSecondRate() }">
+
+          <div th:if="${BookComparisonStage.getRatings().get(1)} == 1" >
+
+            <span class="fa fa-star checked" style="color:#F0C71F"></span>
+            <span class="fa fa-star"  style="color:#BEBEBE"></span>
+            <span class="fa fa-star"  style="color:#BEBEBE"></span>
+            <span class="fa fa-star"  style="color:#BEBEBE"></span>
+            <span class="fa fa-star"  style="color:#BEBEBE" ></span>
+
+          </div>
+
+          <div th:if="${BookComparisonStage.getRatings().get(1)} == 2" >
+
+            <span class="fa fa-star checked" style="color:#F0C71F"></span>
+            <span class="fa fa-star checked" style="color:#F0C71F"></span>
+            <span class="fa fa-star"  style="color:#BEBEBE"></span>
+            <span class="fa fa-star"  style="color:#BEBEBE"></span>
+            <span class="fa fa-star"  style="color:#BEBEBE" ></span>
+
+          </div>
+
+          <div th:if="${BookComparisonStage.getRatings().get(1)} == 3" >
+
+            <span class="fa fa-star checked" style="color:#F0C71F"></span>
+            <span class="fa fa-star checked" style="color:#F0C71F"></span>
+            <span class="fa fa-star checked" style="color:#F0C71F"></span>
+            <span class="fa fa-star"  style="color:#BEBEBE"></span>
+            <span class="fa fa-star"  style="color:#BEBEBE" ></span>
+
+          </div>
+
+          <div th:if="${BookComparisonStage.getRatings().get(1)} == 4" >
+
+            <span class="fa fa-star checked" style="color:#F0C71F"></span>
+            <span class="fa fa-star checked" style="color:#F0C71F"></span>
+            <span class="fa fa-star checked" style="color:#F0C71F"></span>
+            <span class="fa fa-star checked" style="color:#F0C71F"></span>
+            <span class="fa fa-star"  style="color:#BEBEBE"></span>
+
+
+          </div>
+
+          <div th:if="${BookComparisonStage.getRatings().get(1)} == 5" >
+
+            <span class="fa fa-star checked" style="color:#F0C71F"></span>
+            <span class="fa fa-star checked" style="color:#F0C71F"></span>
+            <span class="fa fa-star checked" style="color:#F0C71F"></span>
+            <span class="fa fa-star checked" style="color:#F0C71F"></span>
+            <span class="fa fa-star checked" style="color:#F0C71F"></span>
+
+          </div>
+
+        </div>
+
+
+        <div th:if="${!BookComparisonStage.isShowSecondRate()}">
+          <div>No rating exists </div>
+        </div>
+
+      </div>
+
+
+      <div class="compTableCell cell-feature">Price</div>
+      <div class="compTableCell" th:text="${BookComparisonStage.getFirstBook().getPriceWithCampaign()+' $'}"> </div>
+      <div class="compTableCell" th:text="${BookComparisonStage.getSecondBook().getPriceWithCampaign()+' $'}"></div>
+
+     </div>
+    </div>
+
+
+  <br> <br>
+    <!-- Footer Type-1 -->
+    <footer class="footer footer-type-1 bg-white">
+      <div th:insert="user/footer :: footer"></div>
+    </footer> <!-- end footer -->
+
+  </main> <!-- end main container -->
+
+  <script type="text/javascript" th:src="@{/user/js/bootstrap.min.js}"></script>
+  <script type="text/javascript" th:src="@{/user/js/plugins.js}"></script>
+  <script type="text/javascript" th:src="@{/user/js/scripts.js}"></script>
+  <!-- jQuery Scripts -->
+  <!--
+    <script type="text/javascript" th:src="@{/user/js/jquery.min.js}"></script>
+-->
+
+  <script>
+
+    $(function() {
+      $('select').selectize(options);
+    });
+    $(document).ready(function () {
+      $('select').selectize({
+        sortField: 'text'
+
+      });
+    });
+
+
+  </script>
+
+    
+</body>
+</html>

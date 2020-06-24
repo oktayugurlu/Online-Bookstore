@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>BoomBook Store</title>
+
+  <meta charset="utf-8">
+  <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="">
+
+  <!-- Google Fonts -->
+  <link href='http://fonts.googleapis.com/css?family=Maven+Pro:400,700%7CRaleway:300,400,700%7CPlayfair+Display:700' rel='stylesheet'>
+
+  <!-- Css -->
+  <link th:href="@{/user/css/bootstrap.min.css}" rel="stylesheet"/>
+  <link th:href="@{/user/css/magnific-popup.css}" rel="stylesheet"/>
+  <link th:href="@{/user/css/font-icons.css}" rel="stylesheet"/>
+  <link th:href="@{/user/css/sliders.css}" rel="stylesheet"/>
+  <link th:href="@{/user/css/style.css}" rel="stylesheet"/>
+  <link th:href="@{/user/css/animate.min.css}" rel="stylesheet"/>
+
+  <!-- Favicons -->
+  <link th:href="@{/user/img/boombook-logo.png}" rel="shortcut icon"></head>
+  <link th:href="@{/user/img/apple-touch-icon.png}" rel="apple-touch-icon"></head>
+  <link th:href="@{/user/img/apple-touch-icon-72x72.png}" sizes="72x72" rel="apple-touch-icon"></head>
+  <link th:href="@{/user/img/apple-touch-icon-114x114.png}" sizes="114x114" rel="apple-touch-icon"></head>
+  <link th:href="@{/user/css/theme.css}"  type="text/css" media="all" rel="stylesheet"></head>
+
+  <!-- external olanlar için-->
+
+  <!--
+
+<link rel="stylesheet" type="text/css" href="external/css/bootstrap.css"/>
+  <link rel="stylesheet" type="text/css" href="external/css/jquery.fancybox.css"/>
+  <link rel="stylesheet" type="text/css" href="external/css/jquery-ui.css"/>
+  <link rel="stylesheet" type="text/css" href="external/css/owl.carousel.css"/>
+
+
+  -->
+
+
+</head>
+
+<body class="relative">
+
+  <!-- Preloader -->
+  <div class="loader-mask">
+    <div class="loader">
+      <div></div>
+    </div>
+  </div>
+
+  <main class="content-wrapper oh">
+    <div th:if="${addCardSuccessfull}" style="text-align: center;" class="alert alert-success fade in alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+      <h5><strong>Successfully Added to Cart! &nbsp;&nbsp;</strong>Now you can continue shopping or make purchasing.</h5>
+    </div>
+     <header>
+       <div th:insert="user/navbar :: navbar"></div>
+     </header>
+
+    <br> <br> <hr>
+
+
+
+    <!-- Catalogue -->
+    <section class="section-wrap pt-70 pb-40 catalogue">
+      <div class="container relative">
+        <div class="row">
+
+          <div class="col-md-9 catalogue-col right mb-50">
+
+            <!--
+            <!- Banner ->
+            <div class="banner-wrap relative">
+              <img src="https://image.freepik.com/free-vector/abstract-yellow-zoom-lines-empty-background_1017-19834.jpg" alt="" width="875" height="350">
+              <div class="hero-holder text-center right-align">
+                <div class="hero-lines mb-0">
+                  <h1 class="hero-heading absolute white">BoomBook Store</h1>
+                  <h4 class="hero-subheading white uppercase">Find yourself in a great book.</h4>
+                </div>
+              </div>
+            </div>
+            <!- Banner ->
+            -->
+
+            <div class="shop-filter">
+               <!-- Sort criteria Form-->
+              <form role="form" action="#" class="ecommerce-ordering">
+
+                       <select id="select" onchange="let loc=window.location.toString().split('/');
+                                                     loc=loc[loc.length-1].split('&');
+                                                    (loc[loc.length-1].localeCompare('sortedBy=title')===0 || loc[loc.length-1].localeCompare('sortedBy=authorName')===0
+                                                     || loc[loc.length-1].localeCompare('sortedBy=priceWithCampaign-high_to_low')===0
+                                                     || loc[loc.length-1].localeCompare('sortedBy=priceWithCampaign-low_to_high')===0 )
+                                                      ? (loc[loc.length-2].split('=')[0].localeCompare('&page')===0)
+                                                            ? window.location.href = loc[0]+'&'+ loc[1]+ this.value
+                                                            : window.location.href = loc[0]+this.value
+                                                      : window.location.href +=this.value; ">
+                         <option> --Select--</option>
+                         <option value="&sortedBy=title"> By Book Name</option>
+                         <option value="&sortedBy=authorName">By Author</option>
+                         <option value="&sortedBy=priceWithCampaign-high_to_low">Price: high to low</option>
+                         <option value="&sortedBy=priceWithCampaign-low_to_high">Price: low to high</option>
+                         <!-- <option value="rating">By Rating</option>  -->
+                       </select>
+                  <!--<div style="padding-top: 10px" align="right" >
+                    <input class="btn btn-sm btn-dark" type="submit" id="sort" readonly style="border:0;" value="Filter">
+                  </div>-->
+              </form>
+              <!-- Sort criteria Form-->
+            </div>
+
+
+            <div th:if="${sizeOfTheBooks == 0} " >
+
+              <h1><b style="color: #979797;">Not found for search criteria...</b></h1>
+            </div>
+            <div th:if="${sizeOfTheBooks > 0} " >
+              <div class="shop-catalogue grid-view">
+                <div class="row row-10 items-grid">
+                  <div class="col-md-3 col-xs-6" th:each="books:${thebooks}">
+                    <div class="product-item">
+                      <div class="product-img">
+                        <a th:href="@{/product/productdetail/(bookId=${books.id})}">
+                          <img th:src="${ books.imageURL}" alt="" weight = "277" height="347">
+                          <img th:src="${ books.imageURL}" alt="" class="back-img" weight = "277" height="347">
+                        </a>
+
+                        <!-- if campaign is bigger than zero, there is sale -->
+                        <div th:if="${books?.campaign != null} ">
+                          <div class="product-label">
+                            <span class="sale">sale</span>
+                          </div>
+                        </div>
+                        <!-- if campaign is bigger than zero, there is sale -->
+
+                        <div class="product-actions">
+                          <a href="#" class="product-add-to-compare" data-toggle="tooltip" data-placement="bottom" title="Add to compare">
+                            <i class="fa fa-exchange"></i>
+                          </a>
+
+                          <a th:if="${session.username.loggedin}" th:href="@{/cart/addbooktocartinsearch/(addedbookID=${books.id},bookId=${0},
+                                                                                                          clickedGeneralCategory=${(param.clickedGeneralCategory != null) ? param.clickedGeneralCategory : 0},
+                                                                                                          clickedCampaignCategory=${(param.clickedCampaignCategory != null) ? param.clickedCampaignCategory : 0},
+                                                                                                          clickedCategoryId=${(param.clickedCategoryId != null) ? param.clickedCategoryId : 0},
+                                                                                                          sortedBy=${(param.sortedBy != null) ? param.sortedBy : 'title'},
+                                                                                                          clickedSubcategoryId=${(param.clickedSubcategoryId != null) ? param.clickedSubcategoryId : 0},
+                                                                                                          page=${(param.page != null) ? param.page : 0},
+                                                                                                          searchForm=${(param.searchForm != null) ? param.searchForm : ''},
+                                                                                                          isComeFrom=${#httpServletRequest.requestURI}
+                                                                                                          )}" class="product-add-to-wishlist" data-toggle="tooltip" data-placement="bottom" title="Add to cart">
+                            <i class="fa fa-plus"></i>
+                          </a>
+                          <a th:unless="${session.username.loggedin}" th:href="@{/home/login}" class="product-add-to-wishlist" data-toggle="tooltip" data-placement="bottom" title="Add to cart">
+                            <i class="fa fa-plus"></i>
+                          </a>
+
+                        </div>
+                        <a href="#" class="product-quickview">Quick View</a>
+                      </div>
+                      <div class="product-details">
+                        <h3 th:text="${books.authorName}">
+
+                        </h3>
+                        <h3>
+                          <a class="product-title" th:href="@{/product/productdetail/(bookId=${books.id})}" th:text="${books.title}"></a>
+                        </h3>
+                        <span class="price">
+
+                        <!-- Price if else for campaign -->
+                        <div th:if="${books?.campaign} ">
+                              <del>
+                                <span class="ammount" th:text="${books.price}+'$'"></span>
+                              </del>
+                              <ins>
+                                  <span th:text="${books.priceWithCampaign}+'$'"></span>
+                              </ins>
+                        </div>
+                        <div th:unless="${books?.campaign}">
+                              <ins>
+                                <span class="ammount" th:text=" ${books.price}+'$'"></span>
+                              </ins>
+                        </div>
+
+                      </span>
+                      </div>
+
+                    </div>
+                  </div>
+
+                </div> <!-- end row -->
+              </div> <!-- end grid mode -->
+              <div class="clear"></div>
+              <!-- Pagination -->
+              <div class="pagination-wrap">
+
+                <!-- Show number of books -->
+                <!--<p class="result-count">Showing: 1-12 of 80 results</p>-->
+                <ul class="nav nav-pills">
+                  <nav class="pagination right clear">
+                      <li class="nav-item"  th:each="i : ${#numbers.sequence(0,(thebooks.totalPages)-1)}" >
+                          <a th:if="${#httpServletRequest.requestURI.compareTo('/searchpage/listbooks/')==0}" th:href="@{/searchpage/listbookshandler/ (clickedGeneralCategory=${(param.clickedGeneralCategory != null) ? param.clickedGeneralCategory : 0},
+                                                                                                                                              clickedCampaignCategory=${(param.clickedCampaignCategory != null) ? param.clickedCampaignCategory : 0},
+                                                                                                                                              clickedCategoryId=${(param.clickedCategoryId != null) ? param.clickedCategoryId : 0},
+                                                                                                                                              clickedSubcategoryId=${(param.clickedSubcategoryId != null) ? param.clickedSubcategoryId : 0},
+                                                                                                                                              page=${i},sortedBy=${(param.sortedBy != null) ? param.sortedBy : 'title'} ) }"  th:text="${i}+1" class="nav-link"> </a>
+
+                          <a th:unless="${#httpServletRequest.requestURI.compareTo('/searchpage/listbooks/')==0}" th:href="@{/searchpage/searchkeywordhandler/ ( searchForm=${(param.searchForm != null) ? param.searchForm : ''}
+                                                                                                                                                           ,page=${i},sortedBy=${(param.sortedBy != null) ? param.sortedBy : 'title'} ) }"  th:text="${i}+1" class="nav-link"> </a>
+                      </li>
+                  </nav>
+                </ul>
+              </div>
+            </div>
+
+
+          </div> <!-- end col -->
+
+          <!-- Sidebar -->
+          <aside class="col-md-3 sidebar left-sidebar">
+
+		<section class="section-wrap">
+		<div class="row">
+
+			  <!-- Accordions -->
+			  <div class="col-sm-11">
+				<div class="panel-group accordion mb-50" id="accordion">
+
+                  <!-- collapse -->
+				  <div class="panel panel-default">
+                    <a data-toggle="collapse" data-parent="#accordion" style="color: black"> Categories <span>&nbsp;</span> </a>
+
+                    <div class="panel panel-default" th:each="category:${theCategories}">
+                      <div class="panel-heading">
+                        <a th:href="@{/searchpage/listbooks/(clickedCategoryId=${category.id})}" th:text="${category.title}" class="plus"></a>
+
+                        </a>
+                      </div>
+                      <div class="panel-collapse collapse in">
+                        <div class="panel-body" th:each="subcategory:${category.subcategoryList}">
+                          <!-- input form to send subcategory id which is clicked by user to get book that has the id -->
+                            <a th:href="@{/searchpage/listbooks/(clickedSubcategoryId=${subcategory.id})}" th:text="${subcategory.title}"></a>
+                        </div>
+
+                      </div>
+                    </div>
+                       </div>
+
+
+                    <!-- general category -->
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                        <a th:href="@{/searchpage/listbooks/(clickedGeneralCategory=1)}" >General</a>
+                      </div>
+                      <div class="panel-collapse collapse in">
+                        <div class="panel-body" >
+                          <!-- input form to send subcategory id which is clicked by user to get book that has the id -->
+                          <a th:href="@{/searchpage/listbooks/(clickedCampaignCategory=1)}" >Campaign</a>
+                        </div>
+
+                      </div>
+                    </div>
+                </div>
+
+
+
+				  </div>
+                  <!-- collapse -->
+
+
+
+			  </div> <!-- end accordions -->
+          </div>
+        </div>
+	</section>
+
+          </aside> <!-- end sidebar -->
+
+        </div> <!-- end row -->
+      </div> <!-- end container -->
+    </section> <!-- end catalogue -->
+
+    <!-- Footer Type-1 -->
+    <footer class="footer footer-type-1 bg-white">
+      <div th:insert="user/footer :: footer"></div>
+    </footer> <!-- end footer -->
+
+    <div id="back-to-top">
+      <a href="#top"><i class="fa fa-angle-up"></i></a>
+    </div>
+
+  </main> <!-- end main container -->
+
+
+  <!-- jQuery Scripts -->
+  <script type="text/javascript" th:src="@{/user/js/jquery.min.js}"></script>
+  <script type="text/javascript" th:src="@{/user/js/bootstrap.min.js}"></script>
+  <script type="text/javascript" th:src="@{/user/js/plugins.js}"></script>
+  <script type="text/javascript" th:src="@{/user/js/scripts.js}"></script>
+
+
+
+
+
+</body>
+</html>

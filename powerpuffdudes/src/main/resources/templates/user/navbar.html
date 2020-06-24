@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>BoomBook Store</title>
+    <meta charset="UTF-8">
+    <!-- Css -->
+    <link th:href="@{/user/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/user/css/magnific-popup.css}" rel="stylesheet"/>
+    <link th:href="@{/user/css/font-icons.css}" rel="stylesheet"/>
+    <link th:href="@{/user/css/sliders.css}" rel="stylesheet"/>
+    <link th:href="@{/user/css/style.css}" rel="stylesheet"/>
+    <link th:href="@{/user/css/animate.min.css}" rel="stylesheet"/>
+
+    <!-- Favicons -->
+    <link th:href="@{/user/img/boombook-logo.png}" rel="shortcut icon"/>
+    <link th:href="@{/user/img/apple-touch-icon.png}" rel="apple-touch-icon"/>
+    <link th:href="@{/user/img/apple-touch-icon-72x72.png}" sizes="72x72" rel="apple-touch-icon"/>
+    <link th:href="@{/user/img/apple-touch-icon-114x114.png}" sizes="114x114" rel="apple-touch-icon"/>
+    <link th:href="@{/user/css/theme.css}"  type="text/css" media="all" rel="stylesheet"/>
+
+</head>
+
+<body>
+
+<div th:fragment="navbar" class="navbar">
+
+    <div th:if="${!session.username.loggedin}">
+    <!-- Navigation-->
+    <header class="nav-type-1" >
+        <nav class="navbar navbar-static-top">
+            <div class="navigation" id="">
+                <div class="container relative">
+                    <div class="row">
+
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <!-- Mobile cart -->
+                            <div class="nav-cart mobile-cart hidden-lg hidden-md">
+                                <div class="nav-cart-outer">
+                                    <div class="nav-cart-inner">
+                                        <a href="#" class="nav-cart-icon">2</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- end navbar-header -->
+
+                        <div class="header-wrap" style="padding-left:5px;padding-right:0px;">
+                            <div class="header-wrap-holder">
+
+                                <!-- Logo MEMET DEGISTIRILECEK-->
+                                <div class="logo-container" style="width: 25%;">
+
+                                    <div class="logo-wrap text-center">
+
+                                        <a th:href="@{/home/boombook}">
+
+                                            <img id="blowingLogo" class="logo" style="position: relative;background-size: auto;"
+                                                 th:src="@{/user/img/boombook-logo.png}" alt="logo">
+
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <!-- Search -->
+                                <div class="nav-search hidden-sm hidden-xs">
+
+                                    <form class = "form-line" th:action="@{/searchpage/searchbutton}" th:object="${searchForm}" method="POST">
+                                        <div style="width: 200%" class="row">
+                                            <div class="col-md-9">
+
+                                                <input name="searchForm" th:value="*{searchKey}" type="search" style="width: 115%; height: 54px;" placeholder="Search a book..." >                                            </div>
+                                            <div class="col-md-3">
+                                                <button type="submit" style="border-style: none; width: 70%; height: 54px;"><i class="icon icon_search" aria-hidden="true"></i></button>
+ 
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </div>
+
+
+
+
+                                <!-- Cart MEMET DEGISTIRILECEK-->
+                                <div class="hidden-sm hidden-xs">
+
+
+                                    <div>
+                                        <!-- bu kısımdaki style width ve marginler sayesinde profile buttonunun
+                                        fazlalığından kurtulmuş olduk. yüzde yüz olmasa da... -->
+                                        <div class="col-md-6 " align="center" style="width: 150px; margin-width: 120px;height: 54px;margin-top: 45px; margin-left: 70px;" >
+                                            <a th:href="@{/home/login}">
+                                            <button class="btn btn-primary" type="button" > Login/Register &nbsp;
+                                            </button>
+
+                                            </a>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="menu-cart-amount right">
+
+
+                                        <!-- önceki kart yazısı-->
+
+                                    </div>
+                                </div> <!-- end cart --><br><br> <!-- mobil için -->
+
+                            </div>
+                        </div> <!-- end header wrap -->
+
+                        <div class="nav-wrap">
+                            <div class="collapse navbar-collapse" id="navbar-collapse">
+
+                                <ul class="nav navbar-nav">
+                                    <!-- search for mobile -->
+                                    <li id="mobile-search" class="hidden-lg hidden-md">
+                                        <form method="POST" th:action="@{/searchpage/searchbutton}" th:object="${searchForm}" class="mobile-search relative">
+
+                                            <input type="search" name="searchForm" th:value="*{searchKey}" class="form-control" placeholder="Search...">
+
+                                            <button type="submit" class="search-button">
+                                                <i class="icon icon_search"></i>
+                                            </button>
+                                        </form>
+                                    </li>
+
+                                    <li class="dropdown">
+                                        <a th:href="@{/home/boombook}">HOME</a>
+                                    </li>
+
+
+
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">BOOKS</a>
+                                        <ul class="dropdown-menu megamenu">
+                                            <li>
+                                                <div class="megamenu-wrap">
+                                                    <div class="row">
+
+                                                        <div class="col-md-3 megamenu-item" th:each="category:${theCategories}">
+                                                            <a th:href="@{/searchpage/listbooks/(clickedCategoryId=${category.id})}"><h6 th:text="${category.title}"></h6></a>
+                                                            <ul class="menu-list">
+                                                                <li th:each="subcategory:${category.subcategoryList}">
+                                                                    <a th:href="@{/searchpage/listbooks/(clickedSubcategoryId=${subcategory.id})}" th:text="${subcategory.title}"></a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </li> <!-- end categories -->
+
+                                    <li class="dropdown">
+                                        <a th:href="@{/boombook/comparebooks}">COMPARE BOOKS</a>
+
+                                    </li>
+
+                                    <li class="dropdown">
+                                        <a th:href="@{#bestsellerbooks}">BESTSELLERS</a>
+                                        <i class="fa fa-angle-down dropdown-toggle" data-toggle="dropdown"></i>
+
+                                    </li>
+
+                                    <li class="dropdown">
+                                        <a th:href="@{#newarrivalbooks}">NEW ARRIVALS</a>
+                                        <i class="fa fa-angle-down dropdown-toggle" data-toggle="dropdown"></i>
+
+                                    </li>
+
+                                    <li class="mobile-links">
+                                        <ul>
+                                            <li>
+                                                <a href="#">Giriş</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">Hesabım</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">Cart</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">İstek Listem</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+
+                                </ul> <!-- end menu -->
+                            </div> <!-- end collapse -->
+                        </div> <!-- end col -->
+
+                    </div> <!-- end row -->
+                </div> <!-- end container -->
+            </div> <!-- end navigation -->
+        </nav> <!-- end navbar -->
+    </header> <!-- end navigation -->
+
+    </div>
+
+
+
+    
+        <div th:if="${session.username.loggedin}">
+        <header class="nav-type-1">
+            <nav class="navbar navbar-static-top">
+        <div class="navigation" id="">
+            <div class="container relative">
+                <div class="row">
+
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <!-- Mobile cart -->
+                        <div class="nav-cart mobile-cart hidden-lg hidden-md">
+                            <div class="nav-cart-outer">
+                                <div class="nav-cart-inner">
+                                    <a href="#" class="nav-cart-icon">2</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!-- end navbar-header -->
+
+                    <div class="header-wrap" style="padding-left:5px;padding-right:0px;">
+                        <div class="header-wrap-holder">
+
+                            <!-- Logo MEMET DEGISTIRILECEK-->
+                            <div class="logo-container" style="width: 25%;">
+
+                                <div class="logo-wrap text-center">
+
+                                    <a th:href="@{/home/boombook}">
+                                        <img class="logo" style="position: relative;background-size: auto;"
+                                             th:src="@{/user/img/boombook-logo.png}" alt="logo">
+                                    </a>
+                                </div>
+                            </div>
+
+
+
+                            <!-- Search -->
+                            <div class="nav-search hidden-sm hidden-xs">
+
+                                <form class = "form-line" th:action="@{/searchpage/searchbutton}" th:object="${searchForm}" method="POST">
+                                    <div style="width: 200%" class="row">
+                                        <div class="col-md-9">
+
+                                            <input name="searchForm" th:value="*{searchKey}" type="search" style="width: 115%; height: 54px;" placeholder="Search a book..." >                                            </div>
+                                        <div class="col-md-3">
+                                            <button type="submit" style="border-style: none;width: 70%; height: 54px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+
+                            <!-- Cart -->
+                            <div class="hidden-sm hidden-xs">
+                                <div>
+                                    <div class="col-md-6 dropdown" align="center" style="width: 150px; margin-width: 120px;height: 54px;margin-top: 45px; margin-left: 70px;" >
+
+                                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"> Profile &nbsp;
+                                            <span class="caret"></span></button>
+                                        <ul class="dropdown-menu">
+                                            <li><a th:href="@{/user/profile}">Account</a></li>
+                                            <li><a th:href="@{/user/currentDeliveries}">Order Status</a></li>
+                                            <li><a th:href="@{/user/deliveryHistory}">Delivery History</a></li>
+
+                                            <li><a th:href="@{/home/logout}">Log Out</a></li>
+
+                                        </ul>
+                                    </div>
+
+                                    <div class="col-md-6 dropdown" style="width: 200px;height: 54px;margin-top: 45px;" >
+                                        <div class="nav-cart right" style="margin-right: 0px; margin-bottom: 60px;">
+                                            <div class="nav-cart-outer">
+                                                <div class="nav-cart-inner">
+                                                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                                                        Cart &nbsp;  <i class="fa fa-shopping-cart"></i>
+                                                        &nbsp; <span class="caret"></span>
+
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <div class="nav-cart-container">
+                                                <div class="nav-cart-items">
+
+                                                    <div th:if="${session.username.getUserCart() != null}" th:each="carts:${session.username.getUserCart()}" class="nav-cart-item clearfix">
+                                                        <div class="nav-cart-img">
+                                                            <a th:href="${carts.bookId.imageURL}">
+                                                            </a>
+                                                        </div>
+                                                        <div class="nav-cart-title">
+                                                            <a th:href="@{/product/productdetail/(bookId=${carts.bookId.id})}" th:text="${carts.bookId.title}"></a>
+                                                            <div class="nav-cart-price">
+                                                                <span th:text="${carts.count}+' x'"></span>
+                                                                <span th:text="'$'+${carts.getBookId().priceWithCampaign}"></span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="nav-cart-remove">
+                                                            <a th:href="@{/cart/removebooktocartinsearch/(deletedCartId=${carts.id},bookId=${(theBookDetail != null) ? theBookDetail.id : 0},
+                                                                                                          clickedGeneralCategory=${(param.clickedGeneralCategory != null) ? param.clickedGeneralCategory : 0},
+                                                                                                          clickedCampaignCategory=${(param.clickedCampaignCategory != null) ? param.clickedCampaignCategory : 0},
+                                                                                                          clickedCategoryId=${(param.clickedCategoryId != null) ? param.clickedCategoryId : 0},
+                                                                                                          sortedBy=${(param.sortedBy != null) ? param.sortedBy : 'title'},
+                                                                                                          clickedSubcategoryId=${(param.clickedSubcategoryId != null) ? param.clickedSubcategoryId : 0},
+                                                                                                          page=${(param.page != null) ? param.page : 0},
+                                                                                                          searchForm=${(param.searchForm != null) ? param.searchForm : ''},
+                                                                                                          isComeFrom=${#httpServletRequest.requestURI}
+                                                                                                          )}">
+                                                                <i class="icon icon_close"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <p th:if="${session.username.totalCart == 0}"  style="text-align: center;">
+                                                        <b style="color: #979797;">
+                                                            Add a book to buy!
+                                                        </b>
+                                                        <br><br>
+                                                    </p>
+
+                                                </div> <!-- end cart items -->
+
+                                                <div class="nav-cart-summary">
+                                                    <span>Total</span>
+                                                    <span class="total-price" th:text="'$'+${session.username.totalCart}"></span>
+                                                </div>
+
+                                                <div class="nav-cart-actions mt-20">
+                                                    <a th:if="${session.username.totalCart != 0}" th:href="@{/checkout/checkoutstart}" class="btn btn-md btn-dark mt-10"><span>Buy Now</span></a>
+                                                    <a th:unless="${session.username.totalCart != 0}" class="btn btn-md btn-dark mt-10" style="background-color: #FAC48D"><span>Buy Now</span></a>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+
+
+                                <div class="menu-cart-amount right">
+
+
+                                    <!-- önceki kart yazısı-->
+
+                                </div>
+                            </div> <!-- end cart --> <br><br>  <!-- mobil için -->
+
+                        </div>
+                    </div> <!-- end header wrap -->
+
+                    <div class="nav-wrap">
+
+                        <div class="collapse navbar-collapse" id="navbar-collapse">
+
+                            <ul class="nav navbar-nav">
+
+                                <li id="mobile-search" class="hidden-lg hidden-md">
+                                    <form method="POST" th:action="@{/searchpage/searchbutton}" th:object="${searchForm}" class="mobile-search relative">
+                                        <input type="search" th:field="*{searchKey}" class="form-control" placeholder="Search...">
+
+
+
+                                        <button type="submit" class="search-button">
+                                            <i class="icon icon_search"></i>
+                                        </button>
+                                    </form>
+                                </li>
+
+                                <li class="dropdown">
+                                    <a th:href="@{/home/boombook}">HOME</a>
+                                </li>
+
+
+
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">BOOKS</a>
+                                    <ul class="dropdown-menu megamenu">
+                                        <li>
+                                            <div class="megamenu-wrap">
+                                                <div class="row">
+
+                                                    <div class="col-md-3 megamenu-item" th:each="category:${theCategories}">
+                                                        <a th:href="@{/searchpage/listbooks/(clickedCategoryId=${category.id})}"><h6 th:text="${category.title}"></h6></a>
+                                                        <ul class="menu-list">
+                                                            <li th:each="subcategory:${category.subcategoryList}">
+                                                                <a th:href="@{/searchpage/listbooks/(clickedSubcategoryId=${subcategory.id})}" th:text="${subcategory.title}"></a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </li> <!-- end categories -->
+
+                                <li class="dropdown">
+
+                                    <a th:href="@{/boombook/comparebooks}">COMPARE BOOKS</a>
+
+                                </li>
+
+                                <li class="dropdown">
+                                    <a th:href="@{#bestsellerbooks}">BESTSELLERS</a>
+                                    <i class="fa fa-angle-down dropdown-toggle" data-toggle="dropdown"></i>
+
+                                </li>
+
+                                <li class="dropdown">
+                                    <a th:href="@{#newarrivalbooks}">NEW ARRIVALS</a>
+                                    <i class="fa fa-angle-down dropdown-toggle" data-toggle="dropdown"></i>
+
+                                </li>
+
+                                <li class="mobile-links">
+                                    <ul>
+                                        <li>
+                                            <a href="#">Login</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Account</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Cart</a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                </ul> <!-- end menu -->
+                            </div> <!-- end collapse -->
+                        </div> <!-- end col -->
+                    </div> <!-- end row -->
+                </div> <!-- end container -->
+            </div> <!-- end navigation -->
+        </nav> <!-- end navbar -->
+    </header> <!-- end navigation -->
+
+    </div>
+</div>
+
+
+
+
+
+
+
+<!-- jQuery Scripts -->
+<script type="text/javascript" th:src="@{/user/js/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/user/js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/user/js/plugins.js}"></script>
+<script type="text/javascript" th:src="@{/user/js/scripts.js}"></script>
+
+
+
+</body>
+</html>

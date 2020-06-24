@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>BoomBook Store</title>
+
+  <meta charset="utf-8">
+  <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="">
+  
+  <!-- Google Fonts -->
+  <link href='http://fonts.googleapis.com/css?family=Maven+Pro:400,700%7CRaleway:300,400,700%7CPlayfair+Display:700' rel='stylesheet'>
+  
+  <link th:href="@{/user/css/bootstrap.min.css}" rel="stylesheet">
+  <link th:href="@{/user/css/magnific-popup.css}" rel="stylesheet">
+  <link th:href="@{/user/css/font-icons.css}" rel="stylesheet">
+  <link th:href="@{/user/css/sliders.css}" rel="stylesheet">
+  <link th:href="@{/user/css/style.css}" rel="stylesheet">
+  <link th:href="@{/user/css/animate.min.css}" rel="stylesheet">
+
+  <!-- Favicons -->
+
+  <link th:href="@{/user/img/boombook-logo.png}" rel="shortcut icon">
+  <link th:href="@{/user/img/apple-touch-icon.png}" rel="apple-touch-icon">
+  <link th:href="@{/user/img/apple-touch-icon-72x72.png}" sizes="72x72" rel="apple-touch-icon">
+  <link th:href="@{/user/img/apple-touch-icon-114x114.png}" sizes="114x114" rel="apple-touch-icon">
+  <link th:href="@{/user/css/theme.css}"  type="text/css" media="all" rel="stylesheet">
+
+  <!-- external olanlar için-->
+
+</head>
+
+<body class="relative">
+
+  <!-- Preloader -->
+  <div class="loader-mask">
+    <div class="loader">
+      <div></div>
+    </div>
+  </div>
+
+  <main class="content-wrapper oh">
+    <div th:if="${purchaseIsSuccessfull}" style="text-align: center;" class="alert alert-success fade in alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+      <h5><strong>Successfully Purchased! &nbsp;&nbsp;</strong>We received your order. You can relax now and dream about books until shipping is received you.</h5>
+    </div>
+    <div th:if="${cartIsSuccessfull}" style="text-align: center;" class="alert alert-success fade in alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+      <h5><strong>Successfully Added to Cart! &nbsp;&nbsp;</strong>Now you can continue shopping or make purchasing.</h5>
+    </div>
+    <div th:insert="user/navbar :: navbar"></div>
+
+    <!-- Navigation-->
+
+     <hr>
+    <!-- Hero Slider -->
+    <section class="section-wrap nopadding">
+      <div class="container">
+        <div class="entry-slider">
+          <div class="flexslider" id="flexslider-hero">
+            <ul class="slides clearfix">
+
+
+              <li th:each="campaign: ${theCampaigns}">
+
+                <img th:src="${campaign.imageURL}" alt="">
+                <div class="img-holder img-3"></div>
+                <div class="hero-holder text-center">
+                  <div class="hero-lines" style="margin-top: 10%;">
+                    <h1 th:text="${campaign.note}" class="hero-heading white "></h1>
+                    
+                  </div>
+                  <a th:href="@{/searchpage/listbooks/(clickedCampaignCategory=1)}" class="btn btn-lg btn-warning"  style="top:0px;margin-top: 10%;" ><span>Learn More</span></a>
+                </div>
+              </li>
+
+            </ul>
+          </div>
+        </div> <!-- end slider -->
+      </div> 
+        
+    </section> <!-- end hero slider -->
+
+
+    <div th:if="${session.username.loggedin}">
+    <!-- Recommended For You -->
+
+      <section class="section-wrap pb-0">
+        <div class="container">
+
+          <div class="row heading-row">
+            <div class="col-md-12 text-center">
+              <h2 class="heading uppercase" style="text-align: left;"><b>RECOMMENDED FOR YOU !</b></h2>
+            </div>
+          </div>
+
+          <div class="row">
+
+            <div th:each="theRecommendedBook: ${theRecommendedBooks}" class="col-md-3 col-xs-12 animated-from-left">
+              <div class="product-item">
+                <div class="product-img">
+                  <a th:href="@{/product/productdetail/(bookId=${theRecommendedBook.id})}">
+                    <img th:src="${theRecommendedBook.imageURL}" style="height: 350px;" alt="">
+                  </a>
+                  <div class="product-label">
+                    <span class="sale" style="background-color:darkred;color: whitesmoke;">RECOMMENDED</span>
+                  </div>
+                  <div class="product-actions"  style=" pointer-events: none;">
+                    <a href="#" class="product-add-to-compare"  data-toggle="tooltip" data-placement="bottom" title="Add to compare">
+                      <i class="fa fa-exchange"></i>
+                    </a>
+                  </div>
+                  <a href="#" class="product-quickview" style=" pointer-events: none;">View Details</a>
+                </div>
+
+                <div class="product-details">
+
+                  <div class="text-center" >
+                    <h3 style="width:99%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap" th:text="${theRecommendedBook.title}">
+
+                    </h3>
+
+                    <h4 th:text="${theRecommendedBook.authorName}" style="font-size: 12px;">
+
+                    </h4>
+                    <span class="price">
+                <ins>
+                  <span th:text="${theRecommendedBook.price}+' $'" style="font-size: 25px;" class="ammount"></span>
+                  <br><br>
+                </ins>
+              </span>
+                  </div>
+                  <a th:if="${session.username.loggedin}" th:href="@{/cart/addbooktocartinsearch/(addedbookID=${theRecommendedBook.id},bookId=${0})}" class="btn btn-md btn-color"><span>Add to Cart</span></a>
+                  <a th:unless="${session.username.loggedin}" th:href="@{/home/login}" class="btn btn-md btn-color"><span>Add to Cart</span></a>
+
+                </div>
+
+              </div>
+
+            </div>
+
+
+          </div> <!-- end row -->
+        </div>
+
+      </section> <!-- end best sellers -->
+
+    </div>
+    <!-- BEST SELLERS -->
+
+    <section class="section-wrap pb-0">
+      <div class="container">
+
+        <div class="row heading-row">
+          <div class="col-md-12 text-center">
+            <h2 id="bestsellerbooks" class="heading uppercase" style="text-align: left;"><b>BEST SELLERS</b></h2>
+          </div>
+        </div>
+
+        <div class="row">
+
+
+          <div th:each="theBestSeller: ${theBestSellerBooks}" class="col-md-3 col-xs-12 animated-from-left">
+            <div class="product-item">
+              <div class="product-img">
+                <a  th:href="@{/product/productdetail/(bookId=${theBestSeller.id})}">
+                  <img th:src="${theBestSeller.imageURL}" style="height: 350px;" alt="">
+                </a>
+                <div class="product-label">
+                  <span class="sale" style="background-color:darkred;color: whitesmoke;">NEW</span>
+                </div>
+                <div class="product-actions"  style=" pointer-events: none;">
+                  <a href="#" class="product-add-to-compare"  data-toggle="tooltip" data-placement="bottom" title="Add to compare">
+                    <i class="fa fa-exchange"></i>
+                  </a>
+                </div>
+                <a href="#" class="product-quickview" style=" pointer-events: none;">View Details</a>
+              </div>
+
+              <div class="product-details">
+
+
+                <div class="text-center" >
+                  <h3 style="width:99%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap" th:text="${theBestSeller.title}">
+
+                  </h3>
+
+                  <h4 th:text="${theBestSeller.authorName}" style="font-size: 12px;">
+
+                  </h4>
+                  <span class="price">
+                <ins>
+                  <span th:text="${theBestSeller.price}+' $'" style="font-size: 25px;" class="ammount"></span>
+                  <br><br>
+                </ins>
+              </span>
+                </div>
+                <a th:if="${session.username.loggedin}" th:href="@{/cart/addbooktocartinsearch/(addedbookID=${theBestSeller.id},bookId=${0})}" class="btn btn-md btn-color"><span>Add to Cart</span></a>
+                <a th:unless="${session.username.loggedin}" th:href="@{/home/login}"  class="btn btn-md btn-color"><span>Add to Cart</span></a>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+
+        </div> <!-- end row -->
+      </div>
+    </section> <!-- end best sellers -->  
+
+
+    <section class="section-wrap pb-0">
+      <div class="container">
+
+        <div class="row heading-row">
+          <div class="col-md-12 text-center">
+            <h2 class="heading uppercase" id="newarrivalbooks" style="text-align: left;"><b>NEW ARRIVALS</b></h2>
+          </div>
+        </div>
+
+        <div class="row">
+
+          <form>
+          <div th:each="theNewBook: ${theNewBooks}" class="col-md-3 col-xs-12 animated-from-left">
+            <div class="product-item">
+              <div class="product-img">
+                <a th:href="@{/product/productdetail/(bookId=${theNewBook.id})}">
+                  <img th:src="${theNewBook.imageURL}" style="height: 350px;" alt="">
+               </a>
+               <div class="product-label">
+                <span class="sale" style="background-color:darkred;color: whitesmoke;">NEW</span>
+              </div>
+                <div class="product-actions"  style=" pointer-events: none;">
+                  <a href="#" class="product-add-to-compare"  data-toggle="tooltip" data-placement="bottom" title="Add to compare">
+                    <i class="fa fa-exchange"></i>
+
+                  </a>
+                </div>
+                <a href="#" class="product-quickview" style=" pointer-events: none;">View Details</a>
+              </div>
+
+              <div class="product-details">
+
+              <div class="text-center" >
+                <h3 style="width:99%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap" th:text="${theNewBook.title}">
+
+                </h3>
+
+              <h4 th:text="${theNewBook.authorName}" style="font-size: 12px;">
+
+              </h4>
+              <span class="price">
+                <ins>
+                  <span th:text="${theNewBook.price}+' $'" style="font-size: 25px;" class="ammount"></span>
+                  <br><br>
+                </ins>
+              </span>
+            </div>
+
+                <a th:if="${session.username.loggedin}" th:href="@{/cart/addbooktocartinsearch/(addedbookID=${theNewBook.id},bookId=${0})}" class="btn btn-md btn-color"><span>Add to Cart</span></a>
+                <a th:unless="${session.username.loggedin}" th:href="@{/home/login}" class="btn btn-md btn-color"><span>Add to Cart</span></a>
+              </div>
+          
+
+            </div>
+
+          </div>
+
+
+
+          </form>
+
+
+        </div> <!-- end row -->
+      </div>
+    </section> <!-- end new Arrival -->
+
+
+    <!-- Footer Type-1 -->
+    <footer class="footer footer-type-1 bg-white">
+
+      <div th:insert="user/footer :: footer"></div>
+
+    </footer> <!-- end footer -->
+
+  </main> <!-- end main container -->
+
+  <!-- jQuery Scripts -->
+
+  <script type="text/javascript" th:src="@{/user/js/jquery.min.js}"></script>
+  <script type="text/javascript" th:src="@{/user/js/bootstrap.min.js}"></script>
+  <script type="text/javascript" th:src="@{/user/js/plugins.js}"></script>
+  <script type="text/javascript" th:src="@{/user/js/scripts.js}"></script>
+
+<!--
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/plugins.js"></script>
+  <script type="text/javascript" src="js/scripts.js"></script>
+-->
+  
+    
+</body>
+</html>
