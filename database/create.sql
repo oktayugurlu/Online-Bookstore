@@ -74,7 +74,7 @@ create table if not exists Book_Comment(
     user_comment varchar(600),
     added_date DateTime DEFAULT CURRENT_TIMESTAMP,
 	foreign key (book_id) references Book(id) ON DELETE CASCADE ON UPDATE CASCADE,
-    foreign key (customer_id) references Book(id) ON DELETE CASCADE ON UPDATE CASCADE
+    foreign key (customer_id) references Customer(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 create table if not exists Payment_Service(
@@ -121,7 +121,7 @@ create table if not exists Cart(
     count int,
     purchase_request_id int,
     foreign key (book_id) references Book(id) ON DELETE CASCADE ON UPDATE CASCADE,
-    foreign key (customer_id) references Book(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    foreign key (customer_id) references Customer(id) ON DELETE CASCADE ON UPDATE CASCADE,
     foreign key (purchase_request_id) references purchase_request(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -186,5 +186,5 @@ DELIMITER $$
     FOR EACH ROW
 		begin
 			update Book set price_with_campaign = price where book.id =  old.book_id;
-		end$$ 
+		end$$         
 DELIMITER ;

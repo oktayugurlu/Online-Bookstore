@@ -62,13 +62,15 @@ insert into page_admin(admin_password,email) value ('3ac674216f3e15c761ee1a5e255
 
 insert into mail(page_admin_id,customer_id,title,content) value (1, 1,'hello','hello dear');
 
-insert into book_comment(book_id,customer_id,rate,user_comment) value (4, 1,3,'this book is sucks but i like it'); 
-insert into book_comment(book_id,customer_id,rate,user_comment) value (1, 2,2,'Dont buy this book :( Why Dan Brown wrote this book! If I were Dan Brown, I had wrote better !!!');
-insert into book_comment(book_id,customer_id,rate,user_comment) value (5, 1,3,'Average book');
-insert into book_comment(book_id,customer_id,rate,user_comment) value (4, 2,3,'I liked this book');
-insert into book_comment(book_id,customer_id,rate,user_comment) value (5, 2,3,'Average book');
-insert into book_comment(book_id,customer_id,rate,user_comment) value (3, 1,3,'Average book');
- 
+insert into book_comment(book_id,customer_id,rate,user_comment) value (2, 1,4,'this book is sucks but i like it'); 
+insert into book_comment(book_id,customer_id,rate,user_comment) value (4, 2,5,'I liked but dont buy this book :( Why Dan Brown wrote this book! If I were Dan Brown, I had wrote better !!!');
+insert into book_comment(book_id,customer_id,rate,user_comment) value (6, 1,4,'Average book');
+insert into book_comment(book_id,customer_id,rate,user_comment) value (8, 2,5,'I liked this book');
+insert into book_comment(book_id,customer_id,rate,user_comment) value (9, 2,4,'Average book');
+insert into book_comment(book_id,customer_id,rate,user_comment) value (3, 1,5,'Not bad, not bad...');
+insert into book_comment(book_id,customer_id,rate,user_comment) value (10, 1,5,'Not bad, not bad...');
+insert into book_comment(book_id,customer_id,rate,user_comment) value (10, 2,4,'Not bad, not bad...');
+
 insert into campaign(book_id,discount_percentage,note,image_url) value (1, 30,"Horror Books 50% OFF !!","https://i.pinimg.com/originals/5c/10/30/5c103001e28430a2f7f18bc3f4d2dde5.jpg");
 insert into campaign(book_id,discount_percentage,note,image_url) value (3, 50,"Read this books with %20 OFF!!","https://yazname.com/wp-content/uploads/2016/11/Wonderful-Book-Wallpaper.jpg"); 
 insert into campaign(book_id,discount_percentage,note,image_url) value (4, 50,"Extreme campaign on this books!","https://wallpaperaccess.com/full/124378.jpg"); 
@@ -80,22 +82,24 @@ insert into Courier_Company(url,phone,company_name,price) value ("https://www.su
 
 insert into Purchase_Request(is_confirmed,courier_company_id) value (0,1); 
 insert into Purchase_Request(is_confirmed,courier_company_id) value (0,1); 
-insert into Purchase_Request(is_confirmed,courier_company_id) value (0,1); 
-insert into Purchase_Request(is_confirmed,courier_company_id) value (0,1); 
+insert into Purchase_Request(is_confirmed,courier_company_id) value (1,1); 
+insert into Purchase_Request(is_confirmed,courier_company_id) value (1,1); 
 
-insert into cart(book_id,customer_id,count, purchase_request_id) value (1,1, 1, 3, 3); 
-insert into cart(book_id,customer_id,count, purchase_request_id) value (1,1, 1, 1, 3);
-insert into cart(book_id,customer_id,count, purchase_request_id) value (2,2, 2, 2, 4);
-insert into cart(book_id,book_id,customer_id,count, purchase_request_id) value (2,2, 2, 3, 4);
+insert into cart(book_id,customer_id,count, purchase_request_id) value (12,1, 3, 1); 
+insert into cart(book_id,customer_id,count, purchase_request_id) value (13,1, 1, 1);
+insert into cart(book_id,customer_id,count, purchase_request_id) value (12,2, 2, 2);
+insert into cart(book_id,customer_id,count, purchase_request_id) value (13,2, 3, 2);
  
-insert into cart(book_id,customer_id,count, purchase_request_id) value (1, 2, 1, 2); 
-insert into cart(book_id,customer_id,count, purchase_request_id) value (4, 2, 2, 2);
-insert into cart(book_id,customer_id,count, purchase_request_id) value (1, 1, 1, 1); 
-insert into cart(book_id,customer_id,count, purchase_request_id) value (4, 1, 2, 1);
-insert into cart(book_id,customer_id,count, purchase_request_id) value (5, 2, 1, 2);
-insert into cart(book_id,customer_id,count, purchase_request_id) value (3, 2, 2, 2);
-insert into cart(book_id,customer_id,count, purchase_request_id) value (5, 1, 1, 1);
-insert into cart(book_id,customer_id,count, purchase_request_id) value (3, 1, 2, 1);
+insert into cart(book_id,customer_id,count, purchase_request_id) value (2, 1, 1, 3); 
+insert into cart(book_id,customer_id,count, purchase_request_id) value (4, 2, 2, 4);
+insert into cart(book_id,customer_id,count, purchase_request_id) value (6, 1, 1, 3); 
+insert into cart(book_id,customer_id,count, purchase_request_id) value (8, 2, 2, 4);
+insert into cart(book_id,customer_id,count, purchase_request_id) value (9, 2, 1, 4);
+insert into cart(book_id,customer_id,count, purchase_request_id) value (3, 1, 2, 3);
+insert into cart(book_id,customer_id,count, purchase_request_id) value (5, 1, 1, 3);
+insert into cart(book_id,customer_id,count, purchase_request_id) value (3, 2, 3, 4);
+insert into cart(book_id,customer_id,count, purchase_request_id) value (10, 1, 1, 3);
+insert into cart(book_id,customer_id,count, purchase_request_id) value (10, 2, 2, 4);
 
 insert into In_Cargo(purchase_request_id,export_date,arrival_date) value (3, '2020-8-11 13:23:44','2020-8-8 13:23:44'); 
 insert into In_Cargo(purchase_request_id,export_date,arrival_date) value (4, '2020-3-11 13:23:44','2020-3-8 13:23:44'); 
