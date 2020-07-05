@@ -1,4 +1,3 @@
-
 insert into category(title) values ("Education");
 insert into category(title) values ("Novel");
 insert into category(title) values ("Literature");
